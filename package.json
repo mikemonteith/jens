@@ -4,7 +4,7 @@
   "description": "A static site generator",
   "main": "index.js",
   "scripts": {
-    "start": "electron app/main.js",
+    "start": "electron ./main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mike Monteith <mike@mikemonteith.com>",
@@ -17,6 +17,8 @@
     "electron": "^1.4.12",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
+    "react-redux": "^5.0.1",
+    "redux": "^3.6.0",
     "webpack": "^1.14.0",
     "webpack-loader": "0.0.1"
   }
