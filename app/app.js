@@ -1,7 +1,13 @@
 import React from 'react';
 
+import ContextSwitcher from './containers/ContextSwitcher';
+
 export default class App extends React.Component {
   render() {
-    return (<div>HelloWorld!</div>);
+    return (
+      <div>
+        <ContextSwitcher/>
+      </div>
+    );
   }
 }
