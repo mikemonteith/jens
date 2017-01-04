@@ -1,0 +1,15 @@
+#react-root {
+  .context-switcher {
+
+    flex-direction: row;
+
+    &_button {
+      padding: 0.5em;
+      flex: 0 0;
+
+      &.active {
+        border-bottom: 1px solid #FF0000;
+      }
+    }
+  }
+}

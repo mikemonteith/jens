@@ -12,9 +12,12 @@ module.exports = {
       loader: 'babel',
       // Parse only app files.
       exclude: '/node_modules'
+    },{
+      test: /\.(scss|css)$/,
+      loader: "style!css!autoprefixer!sass"
     }]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json'],
+    extensions: ['', '.js', '.jsx', '.json', '.css', '.scss'],
   }
 };
