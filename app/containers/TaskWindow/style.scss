@@ -1,0 +1,13 @@
+#react-root .task-window {
+  &__tasks-container {
+    display: block;
+  }
+}
+
+#react-root .task-runner {
+  display: block;
+
+  &__button {
+    display: inline;
+  }
+}

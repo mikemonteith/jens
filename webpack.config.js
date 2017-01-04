@@ -19,5 +19,18 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json', '.css', '.scss'],
-  }
+  },
+  externals: [
+    (function () {
+      var IGNORES = [
+        'child_process'
+      ];
+      return function (context, request, callback) {
+        if (IGNORES.indexOf(request) >= 0) {
+          return callback(null, "require('" + request + "')");
+        }
+        return callback();
+      };
+    })()
+  ]
 };
