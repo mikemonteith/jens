@@ -20,6 +20,7 @@
     "classnames": "^2.2.5",
     "css-loader": "^0.26.1",
     "electron": "^1.4.12",
+    "electron-devtools-installer": "^2.0.1",
     "node-sass": "^4.1.1",
     "npm": "^4.0.5",
     "react": "^15.4.1",

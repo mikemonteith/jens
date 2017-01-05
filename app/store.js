@@ -9,4 +9,12 @@ const rootReducer = combineReducers({
 
 const initialState = {};
 
-export default createStore(rootReducer, initialState);
+const store = createStore(
+  rootReducer,
+  initialState,
+  compose(
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+  )
+);
+
+export default store;
