@@ -33,6 +33,6 @@ export default connect(
 
   }),
   (dispatch) => ({
-    onRunTask: (taskName) => actions.runTask(taskName),
+    onRunTask: (taskName) => dispatch(actions.runTask(taskName)),
   })
 )(TaskWindow);

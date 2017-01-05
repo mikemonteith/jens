@@ -1,11 +1,12 @@
 
-import { createStore, combineReducers } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import createSagaMiddleware from 'redux-saga'
 
-import contextSwitcher from './containers/ContextSwitcher/reducer';
+import taskWindowSagas from './containers/TaskWindow/sagas';
 
-const rootReducer = combineReducers({
-  contextSwitcher,
-});
+import rootReducer from './reducer'
+
+const sagaMiddleware = createSagaMiddleware()
 
 const initialState = {};
 
@@ -13,8 +14,11 @@ const store = createStore(
   rootReducer,
   initialState,
   compose(
+    applyMiddleware(sagaMiddleware),
     window.devToolsExtension ? window.devToolsExtension() : f => f
   )
 );
+
+sagaMiddleware.run(taskWindowSagas)
 
 export default store;

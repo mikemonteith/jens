@@ -1,20 +1,16 @@
 
-import { spawn } from 'child_process'
+import * as constants from './constants'
 
+export const runTask = (taskName) => ({
+  type: constants.START,
+  taskName,
+})
 
-export const runTask = (taskName) => {
-  const run = spawn('./node_modules/.bin/npm', ['run', taskName])
+export const receiveTaskMessage = (msg) => ({
+  type: msg.type,
+  message: msg.value,
+})
 
-  run.stdout.on('data', (data) => {
-    console.log(`stdout: ${data}`);
-  });
-
-  run.stderr.on('data', (data) => {
-    console.log(`stderr: ${data}`);
-  });
-
-  run.on('close', (code) => {
-    console.log(`child process exited with code ${code}`);
-  });
-
-}
+export const endTask = () => ({
+  type: constants.END,
+})
