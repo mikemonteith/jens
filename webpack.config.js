@@ -6,6 +6,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.bundle.js',
   },
+  target: 'electron-renderer',
   module: {
     loaders: [{
       test: /\.(js|jsx)$/,
@@ -23,7 +24,8 @@ module.exports = {
   externals: [
     (function () {
       var IGNORES = [
-        'child_process'
+        'child_process',
+        'fs',
       ];
       return function (context, request, callback) {
         if (IGNORES.indexOf(request) >= 0) {

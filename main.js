@@ -4,6 +4,7 @@ const url = require('url')
 
 const ElectronDevtoolsInstaller = require('electron-devtools-installer')
 
+const openDialogConstants = require('./app/containers/OpenDialog/constants.js')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -28,7 +29,7 @@ function createWindow () {
     submenu: [{
       label: 'Open...',
       click: function() {
-        win.webContents.send('menu-open')
+        win.webContents.send(openDialogConstants.OPEN_DIALOG)
       },
     }]
   }))

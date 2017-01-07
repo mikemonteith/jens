@@ -2,9 +2,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga'
 
-import taskWindowSagas from './containers/TaskWindow/sagas';
-
 import rootReducer from './reducer'
+import rootSaga from './sagas'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -19,6 +18,6 @@ const store = createStore(
   )
 );
 
-sagaMiddleware.run(taskWindowSagas)
+sagaMiddleware.run(rootSaga)
 
 export default store;
