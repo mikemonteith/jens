@@ -17,11 +17,14 @@ class TaskWindow extends React.Component {
       </span>
     )
 
+    const packageData = this.props.openDialog.packageData
+
     return (
       <div className="task-window">
         <div className="task-window__tasks-container">
-          <TaskRunner task="lint" onRunTask={this.props.onRunTask} />
-          <TaskRunner task="test" onRunTask={this.props.onRunTask} />
+          {Object.keys(packageData && packageData.scripts ? packageData.scripts : {}).map(key => (
+            <TaskRunner task={key} key={key} onRunTask={this.props.onRunTask} />
+          ))}
         </div>
       </div>
     )
@@ -30,7 +33,7 @@ class TaskWindow extends React.Component {
 
 export default connect(
   (state) => ({
-
+    openDialog: state.openDialog,
   }),
   (dispatch) => ({
     onRunTask: (taskName) => dispatch(actions.runTask(taskName)),

@@ -1,15 +1,17 @@
 
-import taskRunner from '../../utils/runtask'
-import { take, call, put, takeEvery } from 'redux-saga/effects'
+import NpmUtil from '../../utils/npm'
+import { take, call, put, takeEvery, select } from 'redux-saga/effects'
 import { eventChannel, END } from 'redux-saga'
+
+export const getDir = (state) => state.openDialog.directory
 
 import * as actions from './actions'
 import * as constants from './constants'
 
-function createChannel(action) {
+function createChannel(action, dir) {
 
   return eventChannel(emitter => {
-    const runner = taskRunner(action.taskName)
+    const runner = new NpmUtil(dir).runTask(action.taskName)
 
     runner.on('message', (msg) => {
       emitter({type: constants.MESSAGE, value: msg.toString()})
@@ -30,7 +32,8 @@ function createChannel(action) {
 }
 
 function* run(action) {
-  const chan = yield call(createChannel, action)
+  const dir = yield select(getDir)
+  const chan = yield call(createChannel, action, dir)
 
   try {
     while (true) {

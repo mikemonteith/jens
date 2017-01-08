@@ -7,6 +7,7 @@ const initialState = {
   running: null,
   message: '',
   errorMessage: '',
+  tasks: [],
 };
 
 export default handleActions({
@@ -33,5 +34,5 @@ export default handleActions({
       ...state,
       errorMessage: state.errorMessage + action.message,
     }
-  }
+  },
 }, initialState);

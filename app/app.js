@@ -10,6 +10,12 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
+
+        {this.props.packageData && (
+          <span className="project-name">
+            Project: {this.props.packageData.name}
+          </span>
+        )}
         <div id="header">
           <ContextSwitcher/>
         </div>
@@ -24,5 +30,6 @@ class App extends React.Component {
 export default connect(
   (state) => ({
     tab: state.contextSwitcher.tab,
+    packageData: state.openDialog.packageData,
   })
 )(App)
