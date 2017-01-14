@@ -5,23 +5,24 @@ import { eventChannel, END } from 'redux-saga'
 
 export const getDir = (state) => state.openDialog.directory
 
-import * as actions from './actions'
 import * as constants from './constants'
 
 function createChannel(action, dir) {
 
   return eventChannel(emitter => {
-    const runner = new NpmUtil(dir).runTask(action.taskName)
+    const { taskName } = action
+    const runner = new NpmUtil(dir).runTask(taskName)
 
     runner.on('message', (msg) => {
-      emitter({type: constants.MESSAGE, value: msg.toString()})
+      emitter({type: constants.MESSAGE, taskName, message: msg.toString()})
     })
 
     runner.on('error', (msg) => {
-      emitter({type: constants.ERROR_MESSAGE, value: msg.toString()})
+      emitter({type: constants.ERROR_MESSAGE, taskName, message: msg.toString()})
     })
 
-    runner.on('end', () => {
+    runner.on('end', (code) => {
+      emitter({type: constants.END_WITH_CODE, taskName, code})
       emitter(END)
     })
 
@@ -37,12 +38,10 @@ function* run(action) {
 
   try {
     while (true) {
-      let msg = yield take(chan)
-      yield put(actions.receiveTaskMessage(msg))
+      let action = yield take(chan)
+      yield put(action)
     }
-  } finally {
-    yield put(actions.endTask())
-  }
+  } finally {}
 }
 
 export default function* () {

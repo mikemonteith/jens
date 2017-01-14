@@ -2,4 +2,4 @@
 export const START = 'TASK_START'
 export const MESSAGE = 'TASK_RUN_MESSAGE'
 export const ERROR_MESSAGE = 'TASK_RUN_ERROR_MESSAGE'
-export const END = 'TASK_END'
+export const END_WITH_CODE = 'TASK_END_WITH_CODE'

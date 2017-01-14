@@ -1,6 +1,21 @@
 #react-root .task-window {
+  flex-direction: row;
+
   &__tasks-container {
-    display: block;
+    width: 50%;
+  }
+
+  &__log {
+    width: 50%;
+    background-color: black;
+    color: white;
+
+    pre {
+      padding: 1em;
+      white-space: pre-line;
+      word-break: break-all;
+      overflow-y: scroll;
+    }
   }
 }
 

@@ -27,7 +27,7 @@ export default class NpmUtil {
 
     process.on('close', (code) => {
       console.log(`child process exited with code ${code}`);
-      emitter.emit('end')
+      emitter.emit('end', code)
     })
 
     return emitter;

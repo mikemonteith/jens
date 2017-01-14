@@ -18,6 +18,8 @@ class TaskWindow extends React.Component {
         ) : (
           <Button className="task-runner__button" onClick={() => this.props.onRunTask(props.task)}>Run</Button>
         )}
+        {props.endCode === 0 && <span>Success</span>}
+        {props.endCode >= 1 && <span>Error</span>}
       </span>
     )
 
@@ -32,8 +34,14 @@ class TaskWindow extends React.Component {
               key={key}
               isRunning={key === this.props.tasks.running}
               onRunTask={this.props.onRunTask}
+              endCode={this.props.tasks.endCodes[key]}
             />
           ))}
+        </div>
+        <div className="task-window__log">
+          <pre>
+            {this.props.tasks.message}
+          </pre>
         </div>
       </div>
     )

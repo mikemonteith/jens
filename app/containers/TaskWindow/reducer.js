@@ -7,7 +7,7 @@ const initialState = {
   running: null,
   message: '',
   errorMessage: '',
-  tasks: [],
+  endCodes: {}
 };
 
 export default handleActions({
@@ -15,12 +15,21 @@ export default handleActions({
     return {
       ...state,
       running: action.taskName,
+      message: state.message + `npm run ${action.taskName}`,
+      endCodes: {
+        ...state.endCodes,
+        [action.taskName]: null,
+      }
     }
   },
-  [constants.END]: (state, action) => {
+  [constants.END_WITH_CODE]: (state, action) => {
     return {
       ...state,
       running: null,
+      endCodes: {
+        ...state.endCodes,
+        [action.taskName]: action.code,
+      }
     }
   },
   [constants.MESSAGE]: (state, action) => {
