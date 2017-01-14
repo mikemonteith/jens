@@ -13,7 +13,11 @@ class TaskWindow extends React.Component {
     const TaskRunner = (props) => (
       <span className="task-runner task-window__task-runner">
         NPM run {props.task}
-        <Button className="task-runner__button" onClick={() => this.props.onRunTask(props.task)}>Run</Button>
+        {props.isRunning ? (
+          <span> Running...</span>
+        ) : (
+          <Button className="task-runner__button" onClick={() => this.props.onRunTask(props.task)}>Run</Button>
+        )}
       </span>
     )
 
@@ -23,7 +27,12 @@ class TaskWindow extends React.Component {
       <div className="task-window">
         <div className="task-window__tasks-container">
           {Object.keys(packageData && packageData.scripts ? packageData.scripts : {}).map(key => (
-            <TaskRunner task={key} key={key} onRunTask={this.props.onRunTask} />
+            <TaskRunner
+              task={key}
+              key={key}
+              isRunning={key === this.props.tasks.running}
+              onRunTask={this.props.onRunTask}
+            />
           ))}
         </div>
       </div>
@@ -34,6 +43,7 @@ class TaskWindow extends React.Component {
 export default connect(
   (state) => ({
     openDialog: state.openDialog,
+    tasks: state.tasks,
   }),
   (dispatch) => ({
     onRunTask: (taskName) => dispatch(actions.runTask(taskName)),
