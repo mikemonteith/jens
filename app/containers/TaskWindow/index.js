@@ -5,24 +5,10 @@ import * as actions from './actions';
 
 require('./style.scss')
 
-import Button from '../../components/button'
+import TaskRunner from './components/TaskRunner'
 
 class TaskWindow extends React.Component {
   render() {
-
-    const TaskRunner = (props) => (
-      <span className="task-runner task-window__task-runner">
-        NPM run {props.task}
-        {props.isRunning ? (
-          <span> Running...</span>
-        ) : (
-          <Button className="task-runner__button" onClick={() => this.props.onRunTask(props.task)}>Run</Button>
-        )}
-        {props.endCode === 0 && <span>Success</span>}
-        {props.endCode >= 1 && <span>Error</span>}
-      </span>
-    )
-
     const packageData = this.props.openDialog.packageData
 
     return (
@@ -33,8 +19,9 @@ class TaskWindow extends React.Component {
               task={key}
               key={key}
               isRunning={key === this.props.tasks.running}
-              onRunTask={this.props.onRunTask}
+              onRunTask={() => this.props.onRunTask(key)}
               endCode={this.props.tasks.endCodes[key]}
+              errorMessage={this.props.tasks.errorMessage}
             />
           ))}
         </div>

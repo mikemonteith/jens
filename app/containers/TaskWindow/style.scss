@@ -21,8 +21,22 @@
 
 #react-root .task-runner {
   display: block;
+  margin: 0.5em;
 
   &__button {
     display: inline;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+  }
+
+  &__show-hide-error {
+    font-size: 12px;
+    color: grey;
+  }
+
+  &__error-message {
+    white-space: pre-line;
+    word-break: break-all;
+    overflow-y: scroll;
   }
 }
