@@ -1,17 +1,22 @@
 
-import { handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions'
 
-import * as constants from './constants';
+import * as constants from './constants'
 
 const initialState = {
-  files: {
-    staged: [],
-    tracked: [],
-    untracked: [],
-  },
-};
+  status: {
+    files: []
+  }
+}
 
 export default handleActions({
-    [constants.UPDATE]: (state, action) => {
+  [constants.UPDATE]: (state, action) => {
   },
-}, initialState);
+  [constants.STATUS_UPDATED]: (state, action) => ({
+    ...state,
+    status: {
+      ...state.status,
+      files: action.files,
+    }
+  })
+}, initialState)

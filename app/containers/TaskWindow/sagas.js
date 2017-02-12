@@ -3,8 +3,7 @@ import NpmUtil from '../../utils/npm'
 import { take, call, put, takeEvery, select } from 'redux-saga/effects'
 import { eventChannel, END } from 'redux-saga'
 
-export const getDir = (state) => state.openDialog.directory
-
+import { getDir } from '../OpenDialog/selectors'
 import * as constants from './constants'
 
 function createChannel(action, dir) {

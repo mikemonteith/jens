@@ -1,0 +1,14 @@
+#react-root .git-window {
+
+  .git-window-file {
+    &--working-tree {
+      color: red;
+    }
+    &--modified {
+      color: orange;
+    }
+    &--staged {
+      color: green;
+    }
+  }
+}

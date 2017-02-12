@@ -1,2 +1,3 @@
 
-export const UPDATE = 'GIT_STATUS_UPDATE';
+export const UPDATE = 'GIT_UPDATE'
+export const STATUS_UPDATED = 'GIT_STATUS_UPDATED'
