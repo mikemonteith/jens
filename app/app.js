@@ -5,6 +5,7 @@ import ContextSwitcher from './containers/ContextSwitcher';
 import * as ContextSwitcherConsts from './containers/ContextSwitcher/constants';
 
 import TaskWindow from './containers/TaskWindow';
+import GitWindow from './containers/GitWindow';
 
 class App extends React.Component {
   render() {
@@ -21,6 +22,7 @@ class App extends React.Component {
         </div>
         <div id="main-body">
           {this.props.tab === ContextSwitcherConsts.TASKS && <TaskWindow/>}
+          {this.props.tab === ContextSwitcherConsts.GIT && <GitWindow/>}
         </div>
       </div>
     );
