@@ -33,6 +33,11 @@ module.exports = {
         }
         return callback();
       };
-    })()
+    })(),
+    function(context, request, callback) {
+      if(/^nodegit/.test(request))
+        return callback(null, 'commonjs' + " " + request);
+      callback();
+    },
   ]
 };
