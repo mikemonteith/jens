@@ -12,6 +12,8 @@ const initialState = {
   isInstalling: false,
   installErrorCode: null,
   installErrorMessage: '',
+
+  dependencyList: null
 };
 
 export default handleActions({
@@ -58,6 +60,12 @@ export default handleActions({
     return {
       ...state,
       isInstalling: false,
+    }
+  },
+  [constants.DEPENDENCY_LIST_END]: (state, action) => {
+    return {
+      ...state,
+      dependencyList: action.output,
     }
   }
 }, initialState);

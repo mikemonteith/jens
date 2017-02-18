@@ -6,6 +6,8 @@ import { eventChannel, END } from 'redux-saga'
 import { getDir } from '../OpenDialog/selectors'
 import * as constants from './constants'
 
+import { PACKAGE_JSON_READ } from '../OpenDialog/constants'
+
 const CHANNEL_MESSAGE = 'CHANNEL_MESSAGE'
 const CHANNEL_ERROR = 'CHANNEL_ERROR'
 const CHANNEL_END = 'CHANNEL_END'
@@ -101,7 +103,53 @@ function* npmInstall() {
   } finally {}
 }
 
+function* checkDependencies(action) {
+  const dir = yield select(getDir)
+  if (!dir) return
+  const runner = new NpmUtil(dir).list()
+  const chan = yield call(createChannel, runner)
+
+  let output = ''
+  try {
+    while (true) {
+      let action = yield take(chan)
+      switch (action.type) {
+        case CHANNEL_MESSAGE:
+          output += action.message
+          yield put({
+            type: constants.DEPENDENCY_LIST_MESSAGE,
+            message: action.message,
+          })
+          break
+        case CHANNEL_ERROR:
+          yield put({
+            type: constants.DEPENDENCY_LIST_ERROR_MESSAGE,
+            message: action.message,
+          })
+          break
+        case CHANNEL_END:
+          yield put({
+            type: constants.DEPENDENCY_LIST_END,
+            code: action.code,
+            output: JSON.parse(output),
+          })
+          break
+        default:
+          // do nothing if channel action is not recognised
+          break
+      }
+    }
+  } finally {}
+}
+
 export default function* () {
   yield takeEvery(constants.START, run)
   yield takeEvery(constants.NPM_INSTALL_START, npmInstall)
+  yield [
+    PACKAGE_JSON_READ,
+    constants.NPM_INSTALL_END,
+    constants.CHECK_DEPENDENCIES
+  ].map(actionType => (
+    takeEvery(actionType, checkDependencies)
+  ))
 }

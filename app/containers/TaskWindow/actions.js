@@ -9,3 +9,7 @@ export const runTask = (taskName) => ({
 export const npmInstall = () => ({
   type: constants.NPM_INSTALL_START,
 })
+
+export const checkDependencies = () => ({
+  type: constants.CHECK_DEPENDENCIES
+})

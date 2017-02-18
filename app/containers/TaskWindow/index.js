@@ -8,12 +8,32 @@ require('./style.scss')
 import TaskRunner from './components/TaskRunner'
 
 class TaskWindow extends React.Component {
+  componentWillMount() {
+    this.props.checkDependencies()
+  }
+
+  isMissingDependencies() {
+    const dependencyList = this.props.tasks.dependencyList
+    if (!dependencyList) {
+      return undefined
+    }
+
+    return Object.keys(dependencyList.dependencies).reduce((acc, name) => {
+      if(dependencyList.dependencies[name].missing === true) {
+        return true
+      } else {
+        return acc
+      }
+    }, false)
+  }
+
   render() {
     const packageData = this.props.openDialog.packageData
 
     return (
       <div className="task-window">
         <div className="task-window__tasks-container">
+          {this.isMissingDependencies() === true && <span>INSTALL REQUIRED</span>}
           <TaskRunner
             task="install"
             isRunning={this.props.tasks.isInstalling}
@@ -49,6 +69,7 @@ export default connect(
   }),
   (dispatch) => ({
     onRunTask: (taskName) => dispatch(actions.runTask(taskName)),
-    onNpmInstall: () => dispatch(actions.npmInstall())
+    onNpmInstall: () => dispatch(actions.npmInstall()),
+    checkDependencies: () => dispatch(actions.checkDependencies())
   })
 )(TaskWindow);

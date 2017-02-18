@@ -40,4 +40,8 @@ export default class NpmUtil {
   install() {
     return this.run(`install`)
   }
+
+  list() {
+    return this.run(`list --json`)
+  }
 }
