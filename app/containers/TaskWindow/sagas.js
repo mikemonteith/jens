@@ -6,22 +6,22 @@ import { eventChannel, END } from 'redux-saga'
 import { getDir } from '../OpenDialog/selectors'
 import * as constants from './constants'
 
-function createChannel(action, dir) {
+const CHANNEL_MESSAGE = 'CHANNEL_MESSAGE'
+const CHANNEL_ERROR = 'CHANNEL_ERROR'
+const CHANNEL_END = 'CHANNEL_END'
 
+function createChannel(runner) {
   return eventChannel(emitter => {
-    const { taskName } = action
-    const runner = new NpmUtil(dir).runTask(taskName)
-
     runner.on('message', (msg) => {
-      emitter({type: constants.MESSAGE, taskName, message: msg.toString()})
+      emitter({type: CHANNEL_MESSAGE, message: msg.toString()})
     })
 
     runner.on('error', (msg) => {
-      emitter({type: constants.ERROR_MESSAGE, taskName, message: msg.toString()})
+      emitter({type: CHANNEL_ERROR, message: msg.toString()})
     })
 
     runner.on('end', (code) => {
-      emitter({type: constants.END_WITH_CODE, taskName, code})
+      emitter({type: CHANNEL_END, code})
       emitter(END)
     })
 
@@ -33,16 +33,75 @@ function createChannel(action, dir) {
 
 function* run(action) {
   const dir = yield select(getDir)
-  const chan = yield call(createChannel, action, dir)
+  const runner = new NpmUtil(dir).runTask(action.taskName)
+  const chan = yield call(createChannel, runner)
 
   try {
     while (true) {
       let action = yield take(chan)
-      yield put(action)
+      switch (action.type) {
+        case CHANNEL_MESSAGE:
+          yield put({
+            type: constants.MESSAGE,
+            message: action.message,
+          })
+          break
+        case CHANNEL_ERROR:
+          yield put({
+            type: constants.ERROR_MESSAGE,
+            message: action.message,
+          })
+          break
+        case CHANNEL_END:
+          yield put({
+            type: constants.END_WITH_CODE,
+            code: action.code,
+          })
+          break
+        default:
+          // do nothing if channel action is not recognised
+          break
+      }
+    }
+  } finally {}
+}
+
+function* npmInstall() {
+  const dir = yield select(getDir)
+  const runner = new NpmUtil(dir).install()
+  const chan = yield call(createChannel, runner)
+
+  try {
+    while (true) {
+      let action = yield take(chan)
+      switch (action.type) {
+        case CHANNEL_MESSAGE:
+          yield put({
+            type: constants.NPM_INSTALL_MESSAGE,
+            message: action.message,
+          })
+          break
+        case CHANNEL_ERROR:
+          yield put({
+            type: constants.NPM_INSTALL_ERROR_MESSAGE,
+            message: action.message,
+          })
+          break
+        case CHANNEL_END:
+          yield put({
+            type: constants.NPM_INSTALL_END,
+            code: action.code,
+          })
+          break
+        default:
+          // do nothing if channel action is not recognised
+          break
+      }
     }
   } finally {}
 }
 
 export default function* () {
   yield takeEvery(constants.START, run)
+  yield takeEvery(constants.NPM_INSTALL_START, npmInstall)
 }

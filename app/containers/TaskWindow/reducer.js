@@ -7,7 +7,11 @@ const initialState = {
   running: null,
   message: '',
   errorMessage: '',
-  endCodes: {}
+  endCodes: {},
+
+  isInstalling: false,
+  installErrorCode: null,
+  installErrorMessage: '',
 };
 
 export default handleActions({
@@ -44,4 +48,16 @@ export default handleActions({
       errorMessage: state.errorMessage + action.message,
     }
   },
+  [constants.NPM_INSTALL_START]: (state, action) => {
+    return {
+      ...state,
+      isInstalling: true,
+    }
+  },
+  [constants.NPM_INSTALL_END]: (state, action) => {
+    return {
+      ...state,
+      isInstalling: false,
+    }
+  }
 }, initialState);

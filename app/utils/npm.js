@@ -36,4 +36,8 @@ export default class NpmUtil {
   runTask(taskName) {
     return this.run(`run ${taskName}`)
   }
+
+  install() {
+    return this.run(`install`)
+  }
 }

@@ -14,6 +14,13 @@ class TaskWindow extends React.Component {
     return (
       <div className="task-window">
         <div className="task-window__tasks-container">
+          <TaskRunner
+            task="install"
+            isRunning={this.props.tasks.isInstalling}
+            onRunTask={this.props.onNpmInstall}
+            endCode={this.props.tasks.installEndCode}
+            errorMessage={this.props.tasks.installErrorMessage}
+          />
           {Object.keys(packageData && packageData.scripts ? packageData.scripts : {}).map(key => (
             <TaskRunner
               task={key}
@@ -42,5 +49,6 @@ export default connect(
   }),
   (dispatch) => ({
     onRunTask: (taskName) => dispatch(actions.runTask(taskName)),
+    onNpmInstall: () => dispatch(actions.npmInstall())
   })
 )(TaskWindow);
