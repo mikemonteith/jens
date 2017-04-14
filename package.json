@@ -4,8 +4,11 @@
   "description": "A static site generator",
   "main": "index.js",
   "scripts": {
-    "start": "electron ./main.js",
+    "build-electron": "electron ./main.js",
+    "build-js": "webpack webpack.config.js",
+    "build-js-watch": "webpack -w webpack.config.js",
     "lint": "eslint --ignore-pattern 'dist/' .",
+    "start": "npm run build-electron & npm run build-js-watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mike Monteith <mike@mikemonteith.com>",
