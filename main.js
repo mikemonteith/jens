@@ -22,6 +22,8 @@ function installDevTools() {
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({width: 800, height: 600})
+  win.electronApp = app;
+  win.JENS_WINDOW_ID = 'new-project'
 
   menu = Menu.getApplicationMenu();
   menu.insert(1, new MenuItem({

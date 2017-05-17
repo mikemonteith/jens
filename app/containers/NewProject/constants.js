@@ -1,0 +1,3 @@
+export const GIT_CLONE = 'GIT_CLONE'
+export const GIT_CLONE_SUCCESS = 'GIT_CLONE_SUCCESS'
+export const GIT_CLONE_ERROR = 'GIT_CLONE_ERROR'
