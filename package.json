@@ -4,9 +4,13 @@
   "description": "A static site generator",
   "main": "index.js",
   "scripts": {
+    "build-component-library": "electron ./support/component-library/main.js",
+    "build-component-library-js": "webpack --config ./support/component-library/webpack.config.js",
+    "build-component-library-js-watch": "webpack -w --config ./support/component-library/webpack.config.js",
     "build-electron": "electron ./main.js",
-    "build-js": "webpack webpack.config.js",
-    "build-js-watch": "webpack -w webpack.config.js",
+    "build-js": "webpack --config webpack.config.js",
+    "build-js-watch": "webpack -w --config webpack.config.js",
+    "component-library": "npm run build-component-library & npm run build-component-library-js-watch",
     "lint": "eslint --ignore-pattern 'dist/' .",
     "start": "npm run build-electron & npm run build-js-watch",
     "test": "echo \"Error: no test specified\" && exit 1"
