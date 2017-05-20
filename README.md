@@ -25,6 +25,9 @@ Lint before committing code with `npm run lint`
 
 Yes please! The more the merrier.
 
+The [component-library](./support/component-library/README.md) can be helpful
+when working with the user interface.
+
 ### Feedback
 
 Please do open github issues to discuss this project, feature requests, bug reports, or anything else that would contribute to the community.

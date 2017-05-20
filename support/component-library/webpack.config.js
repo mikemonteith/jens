@@ -1,7 +1,20 @@
 let path = require('path');
+var extend = require('util')._extend;
 
+var base = require('../../webpack.config.js');
+var config = extend
+
+config.entry = ['babel-polyfill', './support/component-library/index.js']
+module.exports = Object.assign(base, {
+  entry: ['babel-polyfill', './support/component-library/index.js'],
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'index.bundle.js',
+  },
+})
+/*
 module.exports = {
-  entry: ['babel-polyfill', './app/index.js'],
+  entry: ['babel-polyfill', './support/component-library/index.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.bundle.js',
@@ -16,10 +29,10 @@ module.exports = {
     },{
       test: /\.(scss|css)$/,
       loader: "style!css!autoprefixer!sass"
-    }],
+    }]
   },
   sassLoader: {
-    includePaths: [path.resolve(__dirname, "./app/styles")]
+    includePaths: [path.resolve(__dirname, "../../app/styles")]
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json', '.css', '.scss'],
@@ -44,3 +57,4 @@ module.exports = {
     },
   ]
 };
+*/

@@ -1,0 +1,13 @@
+@import 'theme/colors';
+@import 'theme/spacing';
+@import 'theme/fonts';
+
+.window {
+  padding: $spacing-medium;
+
+  color: $color-text;
+  background-color: $color-background;
+
+  font-family: $font-family;
+  font-size: $font-size;
+}
