@@ -16,7 +16,10 @@ module.exports = {
     },{
       test: /\.(scss|css)$/,
       loader: "style!css!autoprefixer!sass"
-    }]
+    }],
+  },
+  sassLoader: {
+    includePaths: [path.resolve(__dirname, "./app/styles")]
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json', '.css', '.scss'],
