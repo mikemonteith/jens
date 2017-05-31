@@ -1,0 +1,34 @@
+@import 'theme/colors';
+
+@mixin animated-striped-background($stripe-width, $speed, $color-1, $color-2) {
+  $max-translate: 3 * $stripe-width - 1px;
+  @keyframes Loading {
+    0% {
+      transform: translateX(0px);
+    }
+    100% {
+      transform: translateX($max-translate);
+    }
+  }
+  margin-left: -$max-translate;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    $color-1 0px,
+    $color-1 1 * $stripe-width,
+    $color-2 1 * $stripe-width,
+    $color-2 2 * $stripe-width
+  );
+  animation: Loading $speed linear infinite;
+}
+
+.loading {
+  background-color: white;
+  flex-direction: row !important;
+
+  &__inner {
+    overflow-x: hidden;
+  }
+  &__inner-background {
+    @include animated-striped-background(10px, 0.5s, $color-action-primary, $color-action-secondary);
+  }
+}

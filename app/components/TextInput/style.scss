@@ -1,0 +1,28 @@
+@import 'theme/spacing';
+@import 'theme/colors';
+@import 'theme/fonts';
+
+input[type=text] {
+  padding: $spacing-medium;
+  font-size: $font-size;
+}
+
+.text-input {
+
+  &--disabled {
+    background-color: $color-input-disabled;
+  }
+
+  &--error {
+    background-color: $color-input-warning;
+    color: $color-warning;
+    border-color: $color-warning;
+    border-width: 1px;
+    border-style: solid;
+  }
+
+  &__error-message {
+    color: $color-warning;
+    font-size: 0.9 * $font-size;
+  }
+}
