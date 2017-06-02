@@ -14,7 +14,7 @@ export default class TaskRunner extends React.Component {
 
   render() {
     return (
-      <span className="task-runner task-window__task-runner">
+      <div className="task-runner task-window__task-runner">
         NPM run {this.props.task}
         {this.props.isRunning ? (
           <span> Running...</span>
@@ -42,7 +42,7 @@ export default class TaskRunner extends React.Component {
         {this.state.showError && (
           <pre className="task-runner__error-message">{this.props.errorMessage}</pre>
         )}
-      </span>
+      </div>
     )
   }
 }
