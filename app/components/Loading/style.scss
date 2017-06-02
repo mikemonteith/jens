@@ -22,13 +22,20 @@
 }
 
 .loading {
+  display: flex;
+  flex-direction: row;
+  height: 10px;
+
   background-color: white;
-  flex-direction: row !important;
 
   &__inner {
+    display: flex;
     overflow-x: hidden;
   }
+
   &__inner-background {
+    display: flex;
+    flex: 1;
     @include animated-striped-background(10px, 0.5s, $color-action-primary, $color-action-secondary);
   }
 }

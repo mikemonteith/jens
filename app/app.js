@@ -7,11 +7,12 @@ import * as ContextSwitcherConsts from './containers/ContextSwitcher/constants';
 import TaskWindow from './containers/TaskWindow';
 import GitWindow from './containers/GitWindow';
 
+import Window from './components/Window'
+
 class App extends React.Component {
   render() {
     return (
-      <div className="app">
-
+      <Window expanded padding={0}>
         {this.props.packageData && (
           <span className="project-name">
             Project: {this.props.packageData.name}
@@ -24,7 +25,7 @@ class App extends React.Component {
           {this.props.tab === ContextSwitcherConsts.TASKS && <TaskWindow/>}
           {this.props.tab === ContextSwitcherConsts.GIT && <GitWindow/>}
         </div>
-      </div>
+      </Window>
     );
   }
 }

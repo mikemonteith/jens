@@ -1,5 +1,6 @@
-#react-root .task-window {
+.task-window {
   flex-direction: row;
+  display: flex;
 
   &__tasks-container {
     width: 50%;
@@ -19,12 +20,10 @@
   }
 }
 
-#react-root .task-runner {
-  display: block;
+.task-runner {
   margin: 0.5em;
 
   &__button {
-    display: inline;
     margin-left: 0.5em;
     margin-right: 0.5em;
   }

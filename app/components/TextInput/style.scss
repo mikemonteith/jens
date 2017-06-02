@@ -3,7 +3,12 @@
 @import 'theme/fonts';
 
 input[type=text] {
-  padding: $spacing-medium;
+  padding-left: $spacing-medium;
+  padding-right: $spacing-medium;
+  height: 4 * $spacing-medium;
+  width: 100%;
+  box-sizing: border-box;
+
   font-size: $font-size;
 }
 
