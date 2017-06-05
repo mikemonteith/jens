@@ -1,0 +1,48 @@
+@import 'theme/spacing';
+@import 'theme/fonts';
+@import 'theme/colors';
+
+.new-project {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+
+  &__inputs {
+    flex-basis: 600px;
+  }
+
+  &__buttons {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    padding: $spacing-small;
+  }
+
+  &__button {
+    margin: $spacing-small;
+  }
+}
+
+.new-project-inputs {
+  &__url-input {
+    padding: $spacing-medium;
+    max-width: 500px;
+  }
+
+  &__cloning-into {
+    margin: $spacing-medium;
+    font-size: $font-size-info-minor;
+  }
+
+  &__change-dir {
+    color: $color-action-secondary;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  &__directory {
+    white-space: pre;
+  }
+}

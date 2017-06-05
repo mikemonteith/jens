@@ -13,6 +13,7 @@ export default handleActions({
   [constants.GIT_CLONE]: (state, action) => ({
       ...state,
       isCloning: true,
+      err: null,
   }),
   [constants.GIT_CLONE_ERROR]: (state, action) => ({
       ...state,
@@ -22,5 +23,6 @@ export default handleActions({
   [constants.GIT_CLONE_SUCCESS]: (state, action) => ({
       ...state,
       isCloning: false,
+      err: null,
   })
 }, initialState)
