@@ -32,8 +32,7 @@ class NewProject extends React.Component {
             <span
               className="new-project-inputs__change-dir"
               onClick={() => {
-                // TODO: change the clone directory
-                alert("TODO")
+                this.props.onDirectoryChange()
               }}
             >Change</span>
           </Text>
@@ -76,6 +75,7 @@ export default connect(
     newProject: state.newProject,
   }),
   (dispatch) => ({
-    onClone: (url, dir) => dispatch(actions.clone(url, dir))
+    onClone: (url, dir) => dispatch(actions.clone(url, dir)),
+    onDirectoryChange: () => dispatch(actions.changeDirectory()),
   })
 )(NewProject)
