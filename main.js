@@ -1,10 +1,10 @@
-const {app, BrowserWindow, Menu, MenuItem} = require('electron')
-const path = require('path')
-const url = require('url')
+import { app, BrowserWindow, Menu, MenuItem } from 'electron'
+import path from 'path'
+import url from 'url'
 
-const ElectronDevtoolsInstaller = require('electron-devtools-installer')
+import * as ElectronDevtoolsInstaller from 'electron-devtools-installer'
 
-const openDialogConstants = require('./app/containers/OpenDialog/constants.js')
+import * as openDialogConstants from './app/containers/OpenDialog/constants.js'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

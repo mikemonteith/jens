@@ -7,7 +7,7 @@
     "build-component-library": "electron ./support/component-library/main.js",
     "build-component-library-js": "webpack --config ./support/component-library/webpack.config.js",
     "build-component-library-js-watch": "webpack -w --config ./support/component-library/webpack.config.js",
-    "build-electron": "electron ./main.js",
+    "build-electron": "electron -r babel-register ./main.js",
     "build-js": "webpack --config webpack.config.js",
     "build-js-watch": "webpack -w --config webpack.config.js",
     "component-library": "npm run build-component-library & npm run build-component-library-js-watch",
@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
+    "babel-register": "^6.26.0",
     "electron-rebuild": "^1.5.7",
     "eslint": "^3.12.2",
     "eslint-config-react-app": "^0.5.0",
