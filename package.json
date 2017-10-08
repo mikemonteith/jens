@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
+    "babel-polyfill": "^6.26.0",
     "babel-register": "^6.26.0",
     "electron-rebuild": "^1.5.7",
     "eslint": "^3.12.2",
