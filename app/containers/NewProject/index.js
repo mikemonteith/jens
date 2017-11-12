@@ -19,6 +19,10 @@ class NewProject extends React.Component {
     }
   }
 
+  _getCloneDir() {
+    return this.props.newProject.cloneDirOverride || this.props.settings.projectsDir
+  }
+
   render() {
     return (
       <Window className="new-project">
@@ -27,7 +31,7 @@ class NewProject extends React.Component {
           <Text className="new-project-inputs__cloning-into">
             Cloning into
             <span className="new-project-inputs__directory">
-              &nbsp;{this.props.newProject.projectsDir}&nbsp;
+              &nbsp;{this._getCloneDir()}&nbsp;
             </span>
             <span
               className="new-project-inputs__change-dir"
@@ -61,7 +65,7 @@ class NewProject extends React.Component {
             className="new-project__button"
             disabled={ !this.state.repoUrl }
             onClick={() => {
-              this.props.onClone(this.state.repoUrl, this.props.newProject.projectsDir)
+              this.props.onClone(this.state.repoUrl, this._getCloneDir())
             }}
           >Clone</Button>
         </div>
@@ -73,6 +77,7 @@ class NewProject extends React.Component {
 export default connect(
   (state) => ({
     newProject: state.newProject,
+    settings: state.settings,
   }),
   (dispatch) => ({
     onClone: (url, dir) => dispatch(actions.clone(url, dir)),

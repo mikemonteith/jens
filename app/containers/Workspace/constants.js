@@ -1,0 +1,1 @@
+export const OPEN_WORKSPACE = 'OPEN_WORKSPACE' 

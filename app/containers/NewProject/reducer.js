@@ -1,11 +1,9 @@
 
 import { handleActions } from 'redux-actions'
-import { remote } from 'electron'
 
 import * as constants from './constants'
 
 const initialState = {
-  projectsDir: remote.getCurrentWindow().electronApp.getPath('userData'),
   isCloning: false,
 }
 
@@ -27,6 +25,6 @@ export default handleActions({
   }),
   [constants.CHANGE_GIT_DIRECTORY_SUCCESS]: (state, action) => ({
     ...state,
-    projectsDir: action.directory,
+    cloneDirOverride: action.directory,
   })
 }, initialState)

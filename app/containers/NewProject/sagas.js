@@ -38,7 +38,7 @@ function* listenToDirectoryChange() {
       const filePaths = yield call(openDirectoryChooser, currentDir)
       yield put({ type: CHANGE_GIT_DIRECTORY_SUCCESS, directory: filePaths[0] })
     } catch (err) {
-      yield put({ type: CHANGE_GIT_DIRECTORY_ERROR })
+      yield put({ type: CHANGE_GIT_DIRECTORY_ERROR, err: err.message })
     }
   })
 }

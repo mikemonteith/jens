@@ -12,7 +12,7 @@ module.exports = {
       test: /\.(js|jsx)$/,
       loader: 'babel',
       // Parse only app files.
-      exclude: '/node_modules'
+      exclude: 'node_modules'
     },{
       test: /\.(scss|css)$/,
       loader: "style!css!autoprefixer!sass"

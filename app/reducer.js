@@ -13,4 +13,9 @@ export default combineReducers({
   tasks: taskWindow,
   newProject,
   openDialog,
+
+  // pass through the state that is run on the main thread
+  // so that windows can access it's properties
+  settings: (state = {}) => state,
+  windows: (state = {}) => state,
 });
