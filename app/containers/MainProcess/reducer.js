@@ -29,7 +29,7 @@ export default handleActions({
     }
   }),
   [constants.WINDOW_CLOSED]: (state, action) => {
-    let windows = state.windows
+    let windows = { ...state.windows }
     delete windows[action.id]
 
     return {
