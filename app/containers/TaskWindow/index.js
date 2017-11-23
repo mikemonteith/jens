@@ -28,7 +28,8 @@ class TaskWindow extends React.Component {
   }
 
   render() {
-    const packageData = this.props.openDialog.packageData
+    console.log(this.props)
+    const packageData = this.props.workspace.package
 
     return (
       <div className="task-window">
@@ -64,7 +65,7 @@ class TaskWindow extends React.Component {
 
 export default connect(
   (state) => ({
-    openDialog: state.openDialog,
+    workspace: state.workspace,
     tasks: state.tasks,
   }),
   (dispatch) => ({

@@ -1,7 +1,4 @@
 
-import path from 'path'
-import fs from 'fs'
-
 import { eventChannel } from 'redux-saga'
 import { take, put, call, takeLatest } from 'redux-saga/effects'
 import { ipcRenderer, remote } from 'electron'
@@ -10,8 +7,6 @@ import {
   OPEN_DIALOG,
   DIRECTORY_SELECTED,
   DIRECTORY_SELECTION_ERROR,
-  PACKAGE_JSON_READ,
-  PACKAGE_JSON_READ_ERROR,
 } from './constants'
 
 function openDialog() {
@@ -61,36 +56,9 @@ function* listenToIPCEvent () {
   }
 }
 
-function* processDirectory () {
-  yield takeLatest(DIRECTORY_SELECTED, function* (action) {
-    const dirpath = action.filePaths[0]
-
-    //verify directory is an NPM package by looking for a package.json
-    try {
-      const packageData = yield new Promise((resolve, reject) => {
-        fs.readFile(path.join(dirpath, 'package.json'), {encoding: 'utf-8'}, (err, data) => {
-          if(err) {
-            reject(err);
-          } else {
-            try {
-              resolve(JSON.parse(data))
-            } catch (jsonErr) {
-              reject(jsonErr);
-            }
-          }
-        });
-      });
-      yield put({type: PACKAGE_JSON_READ, data: packageData})
-    } catch (err) {
-      yield put({type: PACKAGE_JSON_READ_ERROR})
-    }
-  })
-}
-
 export default function* () {
   yield [
     listenToIPCEvent(),
     listenToOpenButton(),
-    processDirectory(),
   ]
 }

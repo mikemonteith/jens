@@ -77,7 +77,7 @@ class NewProject extends React.Component {
 export default connect(
   (state) => ({
     newProject: state.newProject,
-    settings: state.settings,
+    settings: state.main.settings,
   }),
   (dispatch) => ({
     onClone: (url, dir) => dispatch(actions.clone(url, dir)),

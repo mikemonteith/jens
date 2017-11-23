@@ -3,7 +3,7 @@ import { handleActions } from 'redux-actions'
 import { app } from 'electron'
 
 import * as constants from './constants'
-import * as newProjectConstants from '../NewProject/constants'
+import * as workspaceConstants from '../Workspace/constants'
 
 const initialState = {
   settings: {
@@ -12,22 +12,23 @@ const initialState = {
   windows: {
     'new-project': {
       type: 'new-project'
-    },
-    'app': {
-      type: 'app'
     }
-  }
+  },
 }
 
 export default handleActions({
-  [constants.WINDOWS_INIT]: (state, action) => ({
-    ...state,
-    windows: {
-      'new-project': {
-        type: 'new-project'
-      },
+  [constants.WINDOWS_INIT]: (state, action) => {
+    if (Object.keys(state.windows).length === 0) {
+      return {
+        ...state,
+        windows: {
+          ...initialState.windows
+        }
+      }
+    } else {
+      return { ...state }
     }
-  }),
+  },
   [constants.WINDOW_CLOSED]: (state, action) => {
     let windows = { ...state.windows }
     delete windows[action.id]
@@ -37,13 +38,14 @@ export default handleActions({
       windows,
     }
   },
-  [newProjectConstants.GIT_CLONE_SUCCESS]: (state, action) => ({
+  [workspaceConstants.OPEN_WORKSPACE]: (state, action) => ({
     ...state,
     // Add a window
     windows: {
       'app': {
         type: 'app',
         repo: action.repo,
+        maximize: true,
       }
     }
   }),

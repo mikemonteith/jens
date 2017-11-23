@@ -1,6 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga'
 import { electronEnhancer } from 'redux-electron-store';
+import createElectronStorage from 'redux-persist-electron-storage';
+import { persistStore, persistCombineReducers } from 'redux-persist'
 
 import rootReducer from './app/containers/MainProcess/reducer'
 import rootSaga from './app/containers/MainProcess/sagas'
@@ -22,8 +24,13 @@ let enhancer = compose(
   })
 );
 
-store = createStore(rootReducer, enhancer);
+export default () => {
+  let config = { key: 'root', storage: createElectronStorage() }
+  let reducer = persistCombineReducers(config, { main: rootReducer })
+  store = createStore(reducer, enhancer);
+  persistStore(store);
 
-sagaMiddleware.run(rootSaga)
+  sagaMiddleware.run(rootSaga)
 
-export default store
+  return store
+}

@@ -13,13 +13,16 @@ function installDevTools() {
       .catch((err) => console.log('An error occurred: ', err));
 }
 
-import store from './store'
+import createStore from './store'
+
+let store
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
   installDevTools()
+  store = createStore()
   store.dispatch({type: MainProcessConsts.WINDOWS_INIT})
 })
 

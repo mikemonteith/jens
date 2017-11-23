@@ -1,4 +1,4 @@
-import { BrowserWindow, Menu, MenuItem } from 'electron'
+import { BrowserWindow, Menu } from 'electron'
 import url from 'url'
 import path from 'path'
 
@@ -12,16 +12,18 @@ function createWindow (config) {
   let win = new BrowserWindow({width: 800, height: 600})
   win.JENS_WINDOW_ID = type
 
-  let menu = Menu.getApplicationMenu();
-  menu.insert(1, new MenuItem({
-    label: 'File',
-    submenu: [{
-      label: 'Open...',
-      click: function() {
-        win.webContents.send(openDialogConstants.OPEN_DIALOG)
-      },
-    }]
-  }))
+  let menu = Menu.buildFromTemplate([
+    {},
+    {
+      label: 'File',
+      submenu: [{
+        label: 'Open...',
+        click: function() {
+          win.webContents.send(openDialogConstants.OPEN_DIALOG)
+        },
+      }]
+    }
+  ])
   Menu.setApplicationMenu(menu)
 
   // and load the index.html of the app.
@@ -52,6 +54,10 @@ function createWindow (config) {
     }
   })
 
+  if (config.maximize) {
+    win.maximize()
+  }
+
   return win
 }
 
@@ -60,7 +66,7 @@ export default ({dispatch, getState}) => next => action => {
   const returnValue = next(action)
 
   const state = getState()
-  const target = state.windows || {}
+  const target = state.main.windows || {}
 
   //loop over target and create windows that are not already in the registry
   Object.keys(target).forEach(id => {
