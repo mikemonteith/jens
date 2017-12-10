@@ -1,7 +1,8 @@
 import React from 'react'
-import { connect } from 'react-redux'
 
 require('./style.scss')
+
+import connect from '../../connect'
 
 import Button from '../../components/Button'
 import Loading from '../../components/Loading'
@@ -76,8 +77,8 @@ class NewProject extends React.Component {
 
 export default connect(
   (state) => ({
-    newProject: state.newProject,
-    settings: state.main.settings,
+    newProject: state,
+    settings: state._root.settings,
   }),
   (dispatch) => ({
     onClone: (url, dir) => dispatch(actions.clone(url, dir)),

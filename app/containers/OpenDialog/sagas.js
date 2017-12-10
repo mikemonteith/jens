@@ -1,7 +1,6 @@
 
-import { eventChannel } from 'redux-saga'
-import { take, put, call, takeLatest } from 'redux-saga/effects'
-import { ipcRenderer, remote } from 'electron'
+import { put, call, takeLatest } from 'redux-saga/effects'
+import { dialog } from 'electron'
 
 import {
   OPEN_DIALOG,
@@ -11,7 +10,7 @@ import {
 
 function openDialog() {
   return new Promise((resolve, reject) => {
-    remote.dialog.showOpenDialog({
+    dialog.showOpenDialog({
       properties: ['openDirectory'],
     }, (filePaths) => {
       if(filePaths) {
@@ -34,31 +33,8 @@ function* listenToOpenButton () {
     })
 }
 
-function* listenToIPCEvent () {
-  //listen for the menu-open event
-  const chan = eventChannel(emitter => {
-
-    ipcRenderer.on(OPEN_DIALOG, (event, selector) => {
-      emitter({type: OPEN_DIALOG})
-    });
-
-    return () => {} //Not cancelable
-  })
-
-  try {
-    while (true) {
-      let action = yield take(chan)
-      yield put(action)
-    }
-  } finally {
-    console.warn('This listener should never end')
-    //This listener never ends
-  }
-}
-
 export default function* () {
   yield [
-    listenToIPCEvent(),
     listenToOpenButton(),
   ]
 }

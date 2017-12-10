@@ -16,17 +16,14 @@ export default class NpmUtil {
     const process = spawn('./node_modules/.bin/npm', ['--prefix', this._dir].concat(command.split(' ')))
 
     process.stdout.on('data', (data) => {
-      console.log(`stdout: ${data}`);
       emitter.emit('message', data)
     })
 
     process.stderr.on('data', (data) => {
-      console.log(`stderr: ${data}`);
       emitter.emit('error', data)
     })
 
     process.on('close', (code) => {
-      console.log(`child process exited with code ${code}`);
       emitter.emit('end', code)
     })
 

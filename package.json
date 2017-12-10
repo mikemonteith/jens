@@ -40,6 +40,7 @@
     "redux-electron-store": "^0.4.1",
     "redux-persist": "^5.4.0",
     "redux-saga": "^0.14.1",
+    "reselect": "^3.0.1",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
     "webpack": "^1.14.0",

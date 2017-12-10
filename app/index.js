@@ -1,31 +1,32 @@
 
+import querystring from 'querystring'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { remote } from 'electron';
 
 import store from './store';
-import App from './app.js';
+import App from './app.js'; //TODO: put this into the Workspace container
 import NewProject from './containers/NewProject'
 
 require('./index.css');
 
+const params = querystring.parse(global.location.search.substring(1))
+const { windowType } = params
+//TODO: this windowType query param should come from state instead.
 
 const Window = () => {
-    const JENS_WINDOW_ID = remote.getCurrentWindow().JENS_WINDOW_ID
-
-    if (JENS_WINDOW_ID === 'new-project') {
+    if (windowType === 'new-project') {
         return <NewProject />
-    } else if (JENS_WINDOW_ID === 'app') {
+    } else if (windowType === 'app') {
         return <App />
     } else {
-        throw new Error(`invalid JENS_WINDOW_ID variable: ${JENS_WINDOW_ID} not found`)
+        throw new Error(`invalid windowType variable: ${windowType} not found`)
     }
 }
 
 ReactDOM.render(
   <Provider store={store}>
-    <Window/>
+      <Window/>
   </Provider>,
   document.getElementById('react-root')
 );

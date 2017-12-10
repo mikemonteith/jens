@@ -2,10 +2,10 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga'
 import { electronEnhancer } from 'redux-electron-store';
 import createElectronStorage from 'redux-persist-electron-storage';
-import { persistStore, persistCombineReducers } from 'redux-persist'
+import { persistStore, persistReducer } from 'redux-persist'
 
-import rootReducer from './app/containers/MainProcess/reducer'
-import rootSaga from './app/containers/MainProcess/sagas'
+import rootReducer from './reducer'
+import rootSaga from './sagas'
 import windowMiddleware from './windowMiddleware'
 
 const sagaMiddleware = createSagaMiddleware()
@@ -25,10 +25,11 @@ let enhancer = compose(
 );
 
 export default () => {
-  let config = { key: 'root', storage: createElectronStorage() }
-  let reducer = persistCombineReducers(config, { main: rootReducer })
+  let config = { key: 'main', debug: true, storage: createElectronStorage() }
+  let reducer = persistReducer(config, rootReducer)
   store = createStore(reducer, enhancer);
-  persistStore(store);
+  persistStore(store)
+    .purge()
 
   sagaMiddleware.run(rootSaga)
 

@@ -1,16 +1,14 @@
 import { BrowserWindow, Menu } from 'electron'
 import url from 'url'
 import path from 'path'
-
-import * as openDialogConstants from './app/containers/OpenDialog/constants.js'
+import querystring from 'querystring'
 
 let registry = {}
 
-function createWindow (config) {
+function createWindow (config, dispatch) {
   let { type, closedCallback, id } = config
   // Create the browser window.
   let win = new BrowserWindow({width: 800, height: 600})
-  win.JENS_WINDOW_ID = type
 
   let menu = Menu.buildFromTemplate([
     {},
@@ -19,7 +17,7 @@ function createWindow (config) {
       submenu: [{
         label: 'Open...',
         click: function() {
-          win.webContents.send(openDialogConstants.OPEN_DIALOG)
+          dispatch({type: 'OPEN_DIALOG'})
         },
       }]
     }
@@ -30,7 +28,11 @@ function createWindow (config) {
   win.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
-    slashes: true
+    slashes: true,
+    search: querystring.stringify({
+      windowId: id,
+      windowType: type,
+    }),
   }))
 
   // Open the DevTools.
@@ -66,7 +68,7 @@ export default ({dispatch, getState}) => next => action => {
   const returnValue = next(action)
 
   const state = getState()
-  const target = state.main.windows || {}
+  const target = state.windows || {}
 
   //loop over target and create windows that are not already in the registry
   Object.keys(target).forEach(id => {
@@ -80,7 +82,7 @@ export default ({dispatch, getState}) => next => action => {
       let closedCallback = () => {
         dispatch({type: 'WINDOW_CLOSED', id})
       }
-      let ref = createWindow({...target[id], id, closedCallback})
+      let ref = createWindow({...target[id], id, closedCallback}, dispatch)
       // add to the registry
       registry[id] = ref
     }

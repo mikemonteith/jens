@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import classnames from 'classnames';
 
+import connect from '../../connect';
 import * as actions from './actions';
 import * as constants from './constants';
 

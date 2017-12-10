@@ -2,7 +2,8 @@ import { app } from 'electron'
 
 import * as ElectronDevtoolsInstaller from 'electron-devtools-installer'
 
-import * as MainProcessConsts from './app/containers/MainProcess/constants'
+import * as WindowsConstants from './app/containers/Windows/constants'
+import * as settingsActions from './app/containers/Settings/actions'
 
 function installDevTools() {
   ElectronDevtoolsInstaller.default(ElectronDevtoolsInstaller.REACT_DEVELOPER_TOOLS)
@@ -23,7 +24,8 @@ let store
 app.on('ready', () => {
   installDevTools()
   store = createStore()
-  store.dispatch({type: MainProcessConsts.WINDOWS_INIT})
+  store.dispatch(settingsActions.initSettings())
+  store.dispatch({ type: WindowsConstants.WINDOWS_INIT })
 })
 
 // Quit when all windows are closed.
@@ -38,7 +40,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  store.dispatch({type: MainProcessConsts.WINDOWS_INIT})
+  store.dispatch({type: WindowsConstants.WINDOWS_INIT})
 })
 
 // In this file you can include the rest of your app's specific main process

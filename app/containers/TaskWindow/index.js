@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
+import connect from '../../connect';
 import * as actions from './actions';
 
 require('./style.scss')
@@ -28,7 +28,6 @@ class TaskWindow extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     const packageData = this.props.workspace.package
 
     return (

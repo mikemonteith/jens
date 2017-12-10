@@ -105,7 +105,6 @@ function* npmInstall() {
 
 function* checkDependencies(action) {
   const dir = yield select(getDir)
-  console.log(dir)
   if (!dir) return
   const runner = new NpmUtil(dir).list()
   const chan = yield call(createChannel, runner)

@@ -1,5 +1,11 @@
 
 import { handleActions } from 'redux-actions'
+import { combineReducers } from 'redux'
+
+import contextSwitcher from '../ContextSwitcher/reducer'
+import gitWindow from '../GitWindow/reducer'
+import taskWindow from '../TaskWindow/reducer'
+
 import * as constants from './constants'
 
 const initialState = {
@@ -8,12 +14,7 @@ const initialState = {
   package: null,
 }
 
-export default handleActions({
-  [constants.OPEN_WORKSPACE]: (state, action) => ({
-    ...state,
-    repo: action.repo,
-    workingDirectory: action.workingDirectory,
-  }),
+const workspace = handleActions({
   [constants.PACKAGE_JSON_READ]: (state, action) => ({
     ...state,
     package: action.data,
@@ -24,3 +25,12 @@ export default handleActions({
     packageReadError: action.err
   }),
 }, initialState)
+
+export default combineReducers({
+  contextSwitcher,
+  git: gitWindow,
+  tasks: taskWindow,
+  workspace,
+
+  meta: (state) => state || {},
+})

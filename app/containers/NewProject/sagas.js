@@ -1,5 +1,4 @@
 
-import Git from 'nodegit'
 import url from 'url'
 
 import { put, call, takeLatest, select } from 'redux-saga/effects'
@@ -43,10 +42,6 @@ function* listenToDirectoryChange() {
   })
 }
 
-function gitClone(url, localPath) {
-    return Git.Clone.clone(url, localPath)
-}
-
 function getRepoNameFromUrl(inputUrl) {
     const pathname = url.parse(inputUrl).pathname
     return pathname ? pathname.substr(pathname.lastIndexOf('/') + 1) : null
@@ -61,8 +56,7 @@ function* listenToGitClone() {
             throw new Error(`No pathname could be deduced from the repo url ${repoUrl}`)
         }
         const gitDir = projectsDir + '/repos/' + repoName
-        const newRepo = yield call(gitClone, repoUrl, gitDir)
-        yield put({type: GIT_CLONE_SUCCESS, repo: newRepo})
+        yield put({type: GIT_CLONE_SUCCESS, dir: gitDir})
       } catch (err) {
         yield put({type: GIT_CLONE_ERROR, err})
       }

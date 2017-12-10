@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import connect from './connect';
 
 import ContextSwitcher from './containers/ContextSwitcher';
 import * as ContextSwitcherConsts from './containers/ContextSwitcher/constants';
@@ -33,6 +33,6 @@ class App extends React.Component {
 export default connect(
   (state) => ({
     tab: state.contextSwitcher.tab,
-    packageData: state.openDialog.packageData,
+    packageData: state.workspace.package,
   })
 )(App)
