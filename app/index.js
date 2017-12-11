@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import store from './store';
-import App from './app.js'; //TODO: put this into the Workspace container
+import Workspace from './containers/Workspace'
 import NewProject from './containers/NewProject'
 
 require('./index.css');
@@ -18,7 +18,7 @@ const Window = () => {
     if (windowType === 'new-project') {
         return <NewProject />
     } else if (windowType === 'app') {
-        return <App />
+        return <Workspace />
     } else {
         throw new Error(`invalid windowType variable: ${windowType} not found`)
     }
