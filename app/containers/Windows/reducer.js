@@ -59,8 +59,8 @@ export default handleActions({
     }
   },
   [WINDOW_CLOSED]: (state, action) => {
-      const newState = { ...state }
-      delete newState[action.source]
-      return newState
+    const newState = { ...state }
+    delete newState[action.id]
+    return newState
   },
 }, initialState)
