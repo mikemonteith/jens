@@ -36,7 +36,9 @@ function createWindow (config, dispatch) {
   }))
 
   // Open the DevTools.
-  win.webContents.openDevTools()
+  if ( process.env.NODE_ENV === 'dev') {
+    win.webContents.openDevTools()
+  }
 
   // Emitted when the window is closed.
   win.on('close', (e) => {

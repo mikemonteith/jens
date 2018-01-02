@@ -22,7 +22,9 @@ let store
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-  installDevTools()
+  if ( process.env.NODE_ENV === 'dev' ) {
+    installDevTools()
+  }
   store = createStore()
   store.dispatch(settingsActions.initSettings())
   store.dispatch({ type: WindowsConstants.WINDOWS_INIT })

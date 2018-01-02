@@ -15,7 +15,6 @@ describe('application launch', function () {
 
   afterEach(function () {
     if (this.app && this.app.isRunning()) {
-      console.log("CLOSING")
       return this.app.stop()
     }
   })
