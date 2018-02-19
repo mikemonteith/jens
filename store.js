@@ -7,6 +7,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import rootReducer from './reducer'
 import rootSaga from './sagas'
 import windowMiddleware from './windowMiddleware'
+import preloadedTestReducer from './preloadedTestReducer'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -24,11 +25,16 @@ let enhancer = compose(
   })
 );
 
-export default () => {
+export default (done) => {
   let config = { key: 'main', debug: true, storage: createElectronStorage() }
-  let reducer = persistReducer(config, rootReducer)
+  let reducer = rootReducer
+  if (process.env.MOCK_INITIAL_STATE) {
+    const mockState = require(process.env.MOCK_INITIAL_STATE).default
+    reducer = preloadedTestReducer(reducer, mockState)
+  }
+  reducer = persistReducer(config, reducer)
   store = createStore(reducer, enhancer);
-  persistStore(store)
+  persistStore(store, null, done)
     .purge()
 
   sagaMiddleware.run(rootSaga)
