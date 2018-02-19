@@ -1,12 +1,14 @@
 
 import taskWindow from './containers/TaskWindow/sagas';
 import gitWindow from './containers/GitWindow/sagas';
-import openDialog from './containers/OpenDialog/sagas';
+import newProject from './containers/NewProject/sagas';
+import workspace from './containers/Workspace/sagas';
 
 export default function* () {
   yield [
     taskWindow(),
-    openDialog(),
-    gitWindow()
+    newProject(),
+    gitWindow(),
+    workspace(),
   ]
 }

@@ -17,6 +17,11 @@ const initialState = {
 };
 
 export default handleActions({
+  [constants.CHECK_DEPENDENCIES]: (state, action) => {
+    return {
+      ...state,
+    }
+  },
   [constants.START]: (state, action) => {
     return {
       ...state,

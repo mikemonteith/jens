@@ -1,3 +1,6 @@
 
 $font-family: Arial, sans-serif;
 $font-size: 1rem;
+$font-size-info: $font-size; // general information
+$font-size-info-minor: $font-size * 0.9; // less important information
+$font-size-hint: $font-size * 0.8; // tips and hints

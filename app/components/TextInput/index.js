@@ -5,19 +5,21 @@ require('./style.scss')
 
 export default class TextInput extends React.Component {
   render() {
-    const { error, ...rest } = this.props
+    const { error, className, ...rest } = this.props
 
     return (
-      <div>
+      <div className={className}>
         <input
           {...rest}
           type='text'
-          className={classnames('text-input', this.props.className, {
+          className={classnames('text-input', {
             'text-input--disabled': !!this.props.disabled,
             'text-input--error': !!error,
           })}
         />
-        { error && (<span className='text-input__error-message'>{error}</span>)}
+        <span className='text-input__error-message'>
+          {error || '\u00a0' /* nbsp */}
+        </span>
       </div>
     );
   }

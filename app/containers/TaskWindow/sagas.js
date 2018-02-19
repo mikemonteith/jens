@@ -3,10 +3,10 @@ import NpmUtil from '../../utils/npm'
 import { take, call, put, takeEvery, select } from 'redux-saga/effects'
 import { eventChannel, END } from 'redux-saga'
 
-import { getDir } from '../OpenDialog/selectors'
+import { getDir } from '../Workspace/selectors'
 import * as constants from './constants'
 
-import { PACKAGE_JSON_READ } from '../OpenDialog/constants'
+import { PACKAGE_JSON_READ } from '../Workspace/constants'
 
 const CHANNEL_MESSAGE = 'CHANNEL_MESSAGE'
 const CHANNEL_ERROR = 'CHANNEL_ERROR'

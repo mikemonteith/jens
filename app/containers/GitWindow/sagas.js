@@ -4,7 +4,7 @@ import Git from 'nodegit'
 import * as constants from './constants'
 import * as actions from './actions'
 
-import { getDir } from '../OpenDialog/selectors'
+import { getDir } from '../Workspace/selectors'
 
 const getFileStatus = file => {
   return {

@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
+import connect from '../../connect';
 import * as actions from './actions';
 
 require('./style.scss')
@@ -28,7 +28,7 @@ class TaskWindow extends React.Component {
   }
 
   render() {
-    const packageData = this.props.openDialog.packageData
+    const packageData = this.props.workspace.package
 
     return (
       <div className="task-window">
@@ -64,7 +64,7 @@ class TaskWindow extends React.Component {
 
 export default connect(
   (state) => ({
-    openDialog: state.openDialog,
+    workspace: state.workspace,
     tasks: state.tasks,
   }),
   (dispatch) => ({

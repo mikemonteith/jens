@@ -1,10 +1,10 @@
 
 import React from 'react'
-import { connect } from 'react-redux'
 import classnames from 'classnames'
 
 require('./style.scss')
 
+import connect from '../../connect'
 import * as actions from './actions'
 import { selectFileStatus } from './selectors'
 
