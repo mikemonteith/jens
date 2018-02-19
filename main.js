@@ -23,9 +23,10 @@ let store
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
   installDevTools()
-  store = createStore()
-  store.dispatch(settingsActions.initSettings())
-  store.dispatch({ type: WindowsConstants.WINDOWS_INIT })
+  store = createStore(() => {
+    store.dispatch(settingsActions.initSettings())
+    store.dispatch({ type: WindowsConstants.WINDOWS_INIT })
+  })
 })
 
 // Quit when all windows are closed.

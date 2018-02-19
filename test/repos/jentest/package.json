@@ -1,0 +1,11 @@
+{
+  "name": "jentest",
+  "version": "0.0.1",
+  "description": "A test of the Jens system",
+  "scripts": {
+    "start": "echo 'starting'"
+  },
+  "dependencies": {
+    "metalsmith": "^2.3.0"
+  }
+}
