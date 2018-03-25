@@ -5,6 +5,12 @@ import appReducer from './app/reducer'
 import windows from './app/containers/Windows/reducer'
 import settings from './app/containers/Settings/reducer'
 
+/**
+ * @module reducer
+ * @desc The main reducer
+ */
+
+
 const baseReducer = combineReducers({
   windows,
   settings,

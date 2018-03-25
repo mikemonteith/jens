@@ -11,6 +11,11 @@ import preloadedTestReducer from './preloadedTestReducer'
 
 const sagaMiddleware = createSagaMiddleware()
 
+/**
+ * @module store
+ * @desc The main store
+ */
+
 let store
 
 let enhancer = compose(

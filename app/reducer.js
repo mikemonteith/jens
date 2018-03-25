@@ -1,6 +1,10 @@
 
 import workspaceReducer from './containers/Workspace/reducer'
 
+/**
+ * @module app/reducer
+ * @desc The render-side reducer
+ */
 export default (state, action) => {
   if ( state.type === 'app' ) {
     return {

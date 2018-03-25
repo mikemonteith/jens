@@ -10,6 +10,8 @@ import NewProject from './containers/NewProject'
 
 require('./index.css');
 
+/** @module app */
+
 const params = querystring.parse(global.location.search.substring(1))
 const { windowType } = params
 //TODO: this windowType query param should come from state instead.
