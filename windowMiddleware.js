@@ -91,6 +91,10 @@ function createWindow (config, dispatch) {
   return win
 }
 
+/**
+ * @module windowMiddleware
+ * @desc A redux middleware to handle the orchestration of electron windows.
+ */
 export default ({dispatch, getState}) => next => action => {
   // Allow the action to propogate before seeing what our state is
   const returnValue = next(action)
