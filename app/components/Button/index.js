@@ -3,6 +3,14 @@ import classnames from 'classnames'
 
 require('./style.scss')
 
+/**
+ * A Button component inheriting from `<button/>`
+ *
+ * @example
+ * <Button>Button Text</Button>
+ * @param {string} [type] - A style type: `secondary` or `warning`
+ * @param {boolean} [disabled] - Is the button disabled?
+ */
 export default class Button extends React.Component {
   render() {
     return (
