@@ -6,7 +6,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 
 import rootReducer from './reducer'
 import rootSaga from './sagas'
-import windowMiddleware from './windowMiddleware'
+import windowMiddleware from './app/containers/Windows/middleware'
 import preloadedTestReducer from './preloadedTestReducer'
 
 const sagaMiddleware = createSagaMiddleware()

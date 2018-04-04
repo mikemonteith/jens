@@ -1,8 +1,7 @@
 import { app } from 'electron'
-
+import { INIT_WINDOWS } from 'redux-electron-windows'
 import * as ElectronDevtoolsInstaller from 'electron-devtools-installer'
 
-import * as WindowsConstants from './app/containers/Windows/constants'
 import * as settingsActions from './app/containers/Settings/actions'
 
 function installDevTools() {
@@ -25,7 +24,7 @@ app.on('ready', () => {
   installDevTools()
   store = createStore(() => {
     store.dispatch(settingsActions.initSettings())
-    store.dispatch({ type: WindowsConstants.WINDOWS_INIT })
+    store.dispatch({ type: INIT_WINDOWS })
   })
 })
 
@@ -41,7 +40,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  store.dispatch({type: WindowsConstants.WINDOWS_INIT})
+  store.dispatch({ type: INIT_WINDOWS })
 })
 
 // In this file you can include the rest of your app's specific main process

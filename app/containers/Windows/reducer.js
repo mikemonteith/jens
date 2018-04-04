@@ -2,10 +2,7 @@ import { handleActions } from 'redux-actions'
 
 import { DIRECTORY_SELECTED } from '../OpenDialog/constants'
 import { GIT_CLONE_SUCCESS } from '../NewProject/constants'
-import {
-  WINDOWS_INIT,
-  WINDOW_CLOSED,
-} from './constants'
+import { CLOSE_WINDOW, INIT_WINDOWS } from 'redux-electron-windows'
 
 const initialState = {
   'new-project': {
@@ -49,7 +46,7 @@ export default handleActions({
       }
     }
   },
-  [WINDOWS_INIT]: (state, action) => {
+  [INIT_WINDOWS]: (state, action) => {
     if (Object.keys(state).length === 0) {
       return {
         ...initialState,
@@ -58,7 +55,7 @@ export default handleActions({
       return { ...state }
     }
   },
-  [WINDOW_CLOSED]: (state, action) => {
+  [CLOSE_WINDOW]: (state, action) => {
       const newState = { ...state }
       delete newState[action.source]
       return newState
