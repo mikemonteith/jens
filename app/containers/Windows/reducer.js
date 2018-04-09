@@ -57,7 +57,7 @@ export default handleActions({
   },
   [CLOSE_WINDOW]: (state, action) => {
       const newState = { ...state }
-      delete newState[action.source]
+      delete newState[action.id]
       return newState
   },
 }, initialState)
