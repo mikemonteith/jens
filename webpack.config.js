@@ -15,11 +15,11 @@ module.exports = {
       exclude: 'node_modules'
     },{
       test: /\.(scss|css)$/,
-      loader: "style!css!autoprefixer!sass"
+      loader: 'style!css!autoprefixer!sass'
     }],
   },
   sassLoader: {
-    includePaths: [path.resolve(__dirname, "./app/styles")]
+    includePaths: [path.resolve(__dirname, './app/styles')]
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json', '.css', '.scss'],
@@ -32,14 +32,15 @@ module.exports = {
       ];
       return function (context, request, callback) {
         if (IGNORES.indexOf(request) >= 0) {
-          return callback(null, "require('" + request + "')");
+          return callback(null, `require('${request}')`);
         }
         return callback();
       };
     })(),
     function(context, request, callback) {
-      if(/^nodegit/.test(request))
-        return callback(null, 'commonjs' + " " + request);
+      if(/^nodegit/.test(request)) {
+        return callback(null, `commonjs ${request}`);
+      }
       callback();
     },
   ]
