@@ -6,11 +6,11 @@ import * as settingsActions from './app/containers/Settings/actions'
 
 function installDevTools() {
   ElectronDevtoolsInstaller.default(ElectronDevtoolsInstaller.REACT_DEVELOPER_TOOLS)
-      .then((name) => console.log(`Added Extension:  ${name}`))
-      .catch((err) => console.log('An error occurred: ', err));
+    .then((name) => console.log(`Added Extension:  ${name}`))
+    .catch((err) => console.log('An error occurred: ', err));
   ElectronDevtoolsInstaller.default(ElectronDevtoolsInstaller.REDUX_DEVTOOLS)
-      .then((name) => console.log(`Added Extension:  ${name}`))
-      .catch((err) => console.log('An error occurred: ', err));
+    .then((name) => console.log(`Added Extension:  ${name}`))
+    .catch((err) => console.log('An error occurred: ', err));
 }
 
 import createStore from './store'
@@ -21,7 +21,9 @@ let store
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-  installDevTools()
+  if( process.env.NODE_ENV !== 'production' ) {
+    installDevTools()
+  }
   store = createStore(() => {
     store.dispatch(settingsActions.initSettings())
     store.dispatch({ type: INIT_WINDOWS })

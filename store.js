@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga'
 import { electronEnhancer } from 'redux-electron-store';
 import createElectronStorage from 'redux-persist-electron-storage';
 import { persistStore, persistReducer } from 'redux-persist'
+import { logger } from 'redux-logger'
 
 import rootReducer from './reducer'
 import rootSaga from './sagas'
@@ -18,8 +19,13 @@ const sagaMiddleware = createSagaMiddleware()
 
 let store
 
+let middleware = [sagaMiddleware, windowMiddleware]
+if( process.env.NODE_ENV !== 'production' ) {
+  middleware = [...middleware, logger]
+}
+
 let enhancer = compose(
-  applyMiddleware(sagaMiddleware, windowMiddleware),
+  applyMiddleware(...middleware),
   // Must be placed after any enhancers which dispatch
   // their own actions such as redux-thunk or redux-saga
   electronEnhancer({
