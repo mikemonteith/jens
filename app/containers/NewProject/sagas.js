@@ -3,6 +3,7 @@ import url from 'url'
 
 import { put, call, takeLatest, select } from 'redux-saga/effects'
 import { remote } from 'electron'
+import Git from 'nodegit'
 
 import {
     GIT_CLONE,
@@ -12,6 +13,7 @@ import {
     CHANGE_GIT_DIRECTORY_SUCCESS,
     CHANGE_GIT_DIRECTORY_ERROR
 } from './constants'
+import { openProjectWindow } from '../Windows/actions'
 
 const getDirectory = state => state.newProject && state.newProject.projectsDir
 
@@ -47,6 +49,10 @@ function getRepoNameFromUrl(inputUrl) {
     return pathname ? pathname.substr(pathname.lastIndexOf('/') + 1) : null
 }
 
+function gitClone(url, localPath) {
+  return Git.Clone.clone(url, localPath)
+}
+
 function* listenToGitClone() {
     yield takeLatest(GIT_CLONE, function* (action) {
       try {
@@ -56,6 +62,7 @@ function* listenToGitClone() {
             throw new Error(`No pathname could be deduced from the repo url ${repoUrl}`)
         }
         const gitDir = projectsDir + '/repos/' + repoName
+        yield call(gitClone, repoUrl, gitDir)
         yield put({type: GIT_CLONE_SUCCESS, dir: gitDir})
       } catch (err) {
         yield put({type: GIT_CLONE_ERROR, err})
@@ -63,9 +70,16 @@ function* listenToGitClone() {
     })
 }
 
+function* listenToGitCloneSuccess() {
+  yield takeLatest(GIT_CLONE_SUCCESS, function* ({dir}) {
+    yield put(openProjectWindow({dir}))
+  })
+}
+
 export default function* () {
   yield [
     listenToGitClone(),
     listenToDirectoryChange(),
+    listenToGitCloneSuccess(),
   ]
 }

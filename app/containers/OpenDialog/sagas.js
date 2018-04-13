@@ -7,6 +7,7 @@ import {
   DIRECTORY_SELECTED,
   DIRECTORY_SELECTION_ERROR,
 } from './constants'
+import { openProjectWindow } from '../Windows/actions'
 
 function openDialog() {
   return new Promise((resolve, reject) => {
@@ -33,8 +34,15 @@ function* listenToOpenButton () {
     })
 }
 
+function* listenToDirectorySelection () {
+  yield takeLatest(DIRECTORY_SELECTED, function* ({filePaths}) {
+    yield put(openProjectWindow({dir: filePaths[0]}))
+  })
+}
+
 export default function* () {
   yield [
     listenToOpenButton(),
+    listenToDirectorySelection(),
   ]
 }

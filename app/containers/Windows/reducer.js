@@ -1,9 +1,11 @@
 import { handleActions } from 'redux-actions'
 
-import { DIRECTORY_SELECTED } from '../OpenDialog/constants'
-import { GIT_CLONE_SUCCESS } from '../NewProject/constants'
+import { OPEN_PROJECT_WINDOW } from './constants'
 import { CLOSE_WINDOW, INIT_WINDOWS } from 'redux-electron-windows'
 
+/**
+ * Each key defines one window
+ */
 const initialState = {
   'new-project': {
     type: 'new-project'
@@ -11,37 +13,20 @@ const initialState = {
 }
 
 export default handleActions({
-  //TODO: "directory selected" should fire a saga that actually creates the window
-  [GIT_CLONE_SUCCESS]: (state, action) => {
-    const uid = Math.random()
+  [OPEN_PROJECT_WINDOW]: (state, action) => {
+    const uid = action.uid;
     return {
       ...state,
       [uid]: {
         type: 'app',
+        maximize: true,
         meta: {
           workdir: action.dir,
         },
         workspace: {
           //TODO we are assuming we know the structure of workspace state here,
           //we should let this happen inside the workspace reducer somehow instead
-          workingDirectory: action.dir
-        }
-      }
-    }
-  },
-  [DIRECTORY_SELECTED]: (state, action) => {
-    const uid = Math.random() //TODO: THIS SHOULD BE DONE IN AN ACTION!!!
-    return {
-      ...state,
-      [uid]: {
-        type: 'app',
-        meta: {
-          workdir: action.filePaths[0],
-        },
-        workspace: {
-          //TODO we are assuming we know the structure of workspace state here,
-          //we should let this happen inside the workspace reducer somehow instead
-          workingDirectory: action.filePaths[0]
+          workingDirectory: action.dir,
         }
       }
     }
