@@ -29,7 +29,7 @@
     "classnames": "^2.2.5",
     "css-loader": "^0.26.1",
     "electron": "^2.0.5",
-    "electron-devtools-installer": "^2.0.1",
+    "electron-devtools-installer": "^2.2.4",
     "node-sass": "^4.1.1",
     "nodegit": "^0.16.0",
     "npm": "^4.0.5",
