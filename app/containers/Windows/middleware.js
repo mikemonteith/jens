@@ -58,8 +58,10 @@ export default createWindowMiddleware((win, state, id, dispatch) => {
     }),
   }))
 
-  // Open the DevTools.
-  win.webContents.openDevTools()
+  if(process.env.NODE_ENV === 'dev') {
+    // Open the DevTools.
+    win.webContents.openDevTools()
+  }
 
   if (state.maximize) {
     win.maximize()
