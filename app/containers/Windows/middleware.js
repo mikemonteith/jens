@@ -6,7 +6,11 @@ import querystring from 'querystring'
 
 export default createWindowMiddleware((win, state, id, dispatch) => {
   let menu = Menu.buildFromTemplate([
-    {},
+    {
+      submenu: [{
+        role: 'quit',
+      }],
+    },
     {
       label: 'File',
       submenu: [{
@@ -17,31 +21,19 @@ export default createWindowMiddleware((win, state, id, dispatch) => {
       }, {
         type: "separator",
       }, {
-        label: 'Undo',
-        accelerator: 'CmdOrCtrl+Z',
-        selector: 'undo:',
+        role: 'undo',
       }, {
-        label: 'Redo',
-        accelerator: 'Shift+CmdOrCtrl+X',
-        selector: 'redo:',
+        role: 'redo',
       }, {
         type: "separator",
       }, {
-        label: 'Cut',
-        accelerator: 'CmdOrCtrl+X',
-        selector: 'cut:',
+        role: 'cut',
       }, {
-        label: 'Copy',
-        accelerator: 'CmdOrCtrl+C',
-        selector: 'copy:',
+        role: 'copy',
       }, {
-        label: 'Paste',
-        accelerator: 'CmdOrCtrl+V',
-        selector: 'paste:',
+        role: 'paste',
       }, {
-        label: 'Select All',
-        accelerator: 'CmdOrCtrl+A',
-        selector: 'selectAll:',
+        role: 'selectAll',
       }]
     }
   ])
