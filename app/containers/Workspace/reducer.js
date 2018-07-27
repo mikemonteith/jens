@@ -5,6 +5,7 @@ import { combineReducers } from 'redux'
 import contextSwitcher from '../ContextSwitcher/reducer'
 import gitWindow from '../GitWindow/reducer'
 import taskWindow from '../TaskWindow/reducer'
+import filesWindow from '../FilesWindow/reducer'
 
 import * as constants from './constants'
 
@@ -30,6 +31,7 @@ export default combineReducers({
   contextSwitcher,
   git: gitWindow,
   tasks: taskWindow,
+  files: filesWindow,
   workspace,
 
   meta: (state) => state || {},
