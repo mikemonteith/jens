@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions'
-
-import { OPEN_PROJECT_WINDOW } from './constants'
 import { CLOSE_WINDOW, INIT_WINDOWS } from 'redux-electron-windows'
+
+import { OPEN_PROJECT_WINDOW, CLOSE_NEW_PROJECT_WINDOW } from './constants'
 
 /**
  * Each key defines one window
@@ -41,8 +41,13 @@ export default handleActions({
     }
   },
   [CLOSE_WINDOW]: (state, action) => {
-      const newState = { ...state }
-      delete newState[action.id]
-      return newState
+    const newState = { ...state }
+    delete newState[action.id]
+    return newState
+  },
+  [CLOSE_NEW_PROJECT_WINDOW]: (state, action) => {
+    const newState = { ...state }
+    delete newState[action.source]
+    return newState
   },
 }, initialState)

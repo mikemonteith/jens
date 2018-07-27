@@ -13,7 +13,7 @@ import {
     CHANGE_GIT_DIRECTORY_SUCCESS,
     CHANGE_GIT_DIRECTORY_ERROR
 } from './constants'
-import { openProjectWindow } from '../Windows/actions'
+import { openProjectWindow, closeNewProjectWindow } from '../Windows/actions'
 
 const getDirectory = state => state.newProject && state.newProject.projectsDir
 
@@ -73,6 +73,7 @@ function* listenToGitClone() {
 function* listenToGitCloneSuccess() {
   yield takeLatest(GIT_CLONE_SUCCESS, function* ({dir}) {
     yield put(openProjectWindow({dir}))
+    yield put(closeNewProjectWindow())
   })
 }
 
