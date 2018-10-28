@@ -9,7 +9,7 @@ import TextEditor from '../../components/editors/TextEditor'
 require('./style.scss')
 
 import connect from '../../connect'
-import { updateFileTree } from './actions'
+import { updateFileTree, saveFile } from './actions'
 import { selectFileTree } from './selectors'
 
 const renderNode = (props, i) => {
@@ -82,6 +82,10 @@ class FilesWindow extends React.Component {
     }
   }
 
+  onFileChange(content) {
+    this.props.saveFile(this.state.filepath, content)
+  }
+
   renderEditor() {
     const { filepath } = this.state
     if (!filepath) {
@@ -97,6 +101,7 @@ class FilesWindow extends React.Component {
           <MarkdownEditor
             id={this.state.filepath}
             content={this.state.content}
+            onChange={this.onFileChange.bind(this)}
           />
         )
       case '.json':
@@ -108,6 +113,7 @@ class FilesWindow extends React.Component {
           <TextEditor
             id={this.state.filepath}
             content={this.state.content}
+            onChange={this.onFileChange.bind(this)}
           />
         )
     }
@@ -138,5 +144,6 @@ export default connect(
   }),
   (dispatch) => ({
     updateFileTree: () => dispatch(updateFileTree()),
+    saveFile: (filepath, content) => dispatch(saveFile(filepath, content)),
   })
 )(FilesWindow)

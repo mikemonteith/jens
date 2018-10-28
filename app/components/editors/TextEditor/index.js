@@ -16,6 +16,9 @@ export default class TextEditor extends React.Component {
 
   onChange(editorState) {
     this.setState({ editorState })
+
+    const plainText = editorState.getCurrentContent().getPlainText()
+    this.props.onChange(plainText)
   }
 
   handleKeyCommand(command, editorState) {

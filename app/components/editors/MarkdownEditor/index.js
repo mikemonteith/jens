@@ -24,6 +24,8 @@ export default class MarkdownEditor extends React.Component {
 
   handleValueChange = mdeState => {
     this.setState({ mdeState })
+
+    this.props.onChange(mdeState.markdown)
   }
 
   render() {
