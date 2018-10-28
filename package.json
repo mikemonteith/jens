@@ -19,6 +19,7 @@
   "author": "Mike Monteith <mike@mikemonteith.com>",
   "license": "ISC",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.4.2",
     "autoprefixer-loader": "^3.2.0",
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
@@ -29,6 +30,7 @@
     "classnames": "^2.2.5",
     "css-loader": "^0.26.1",
     "directory-tree": "^2.1.0",
+    "draft-js": "^0.10.5",
     "electron": "^2.0.5",
     "electron-devtools-installer": "^2.2.4",
     "node-sass": "^4.1.1",
@@ -36,6 +38,7 @@
     "npm": "^4.0.5",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
+    "react-mde": "^5.7.0",
     "react-redux": "^5.0.1",
     "redux": "^3.6.0",
     "redux-actions": "^1.2.0",
@@ -47,6 +50,7 @@
     "redux-saga": "^0.14.1",
     "reselect": "^3.0.1",
     "sass-loader": "^4.1.1",
+    "showdown": "^1.8.6",
     "style-loader": "^0.13.1",
     "webpack": "^1.14.0",
     "webpack-loader": "0.0.1"
