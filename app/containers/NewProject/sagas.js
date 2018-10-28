@@ -65,7 +65,7 @@ function* listenToGitClone() {
         yield call(gitClone, repoUrl, gitDir)
         yield put({type: GIT_CLONE_SUCCESS, dir: gitDir})
       } catch (err) {
-        yield put({type: GIT_CLONE_ERROR, err})
+        yield put({type: GIT_CLONE_ERROR, err: err.message})
       }
     })
 }
