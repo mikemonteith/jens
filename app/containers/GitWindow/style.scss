@@ -12,3 +12,12 @@
     }
   }
 }
+
+.git-hunk-line {
+  &--addition {
+    color: green;
+  }
+  &--removal {
+    color: red;
+  }
+}
