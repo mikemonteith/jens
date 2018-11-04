@@ -101,7 +101,22 @@ function* addFile (action) {
   yield update()
 }
 
+function* checkoutFile (action) {
+  const { filepath } = action
+  const repoDir = yield select(getDir)
+  const repo = yield Git.Repository.open(repoDir)
+  const index = yield repo.refreshIndex()
+
+  yield Git.Checkout.index(repo, index, {
+    checkoutStrategy: Git.Checkout.STRATEGY.FORCE,
+    paths: filepath,
+  })
+
+  yield update()
+}
+
 export default function* () {
   yield takeEvery(constants.UPDATE, update)
   yield takeEvery(constants.ADD_FILE, addFile)
+  yield takeEvery(constants.CHECKOUT_FILE, checkoutFile)
 }

@@ -4,6 +4,7 @@ import {
   STATUS_UPDATED,
   PATCHES_UPDATED,
   ADD_FILE,
+  CHECKOUT_FILE,
 } from './constants'
 
 export const update = () => ({
@@ -22,5 +23,10 @@ export const patchesUpdated = (patches) => ({
 
 export const addFile = (filepath) => ({
   type: ADD_FILE,
+  filepath,
+})
+
+export const checkoutFile = (filepath) => ({
+  type: CHECKOUT_FILE,
   filepath,
 })
