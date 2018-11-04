@@ -87,6 +87,21 @@ function* update () {
 
 }
 
+function* addFile (action) {
+  const { filepath } = action
+  const repoDir = yield select(getDir)
+  const repo = yield Git.Repository.open(repoDir)
+
+  const index = yield repo.refreshIndex()
+
+  yield index.addByPath(filepath)
+  yield index.write()
+  yield index.writeTree()
+
+  yield update()
+}
+
 export default function* () {
   yield takeEvery(constants.UPDATE, update)
+  yield takeEvery(constants.ADD_FILE, addFile)
 }

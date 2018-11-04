@@ -2,3 +2,4 @@
 export const UPDATE = 'GIT_UPDATE'
 export const STATUS_UPDATED = 'GIT_STATUS_UPDATED'
 export const PATCHES_UPDATED = 'GIT_PATCHES_UPDATED'
+export const ADD_FILE = 'GIT_ADD_FILE'
