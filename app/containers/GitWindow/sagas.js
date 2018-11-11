@@ -1,4 +1,7 @@
+import fs from 'fs'
+import path from 'path'
 
+import * as jsdiff from 'diff'
 import { put, takeEvery, select } from 'redux-saga/effects'
 import Git from 'nodegit'
 import * as constants from './constants'
@@ -101,6 +104,40 @@ function* addFile (action) {
   yield update()
 }
 
+function* checkoutHunk (action) {
+  // To checkout a patch like one would with `git checkout -p`, we effectively
+  // apply the patch in reverse. Overwriting a file with the deleted lines added
+  // and added lines deleted.
+
+  const { hunk, filepath } = action
+  const repoDir = yield select(getDir)
+
+  const fullFilepath = path.join(repoDir, filepath)
+
+  fs.readFile(fullFilepath, 'utf8', (err, file) => {
+
+    const patch = hunk.header + hunk.lines.map(line => {
+      var status = {
+        'CONTEXT': ' ',
+        'ADDITION': '-', // We want to reverse the patch that's given by git diff
+        'REMOVAL': '+', // so addition becomes - and removal becomes +
+      }[line.status]
+      return status + line.content
+    }).join("")
+    const patchedFile = jsdiff.applyPatch(file, patch)
+
+    if(!patchedFile) {
+      throw new Error(`Patch ${patch} could not be applied to ${filepath}`)
+    }
+
+    fs.writeFile(fullFilepath, patchedFile, (err) => {
+      console.warn(err)
+    })
+  })
+
+  yield update()
+}
+
 function* checkoutFile (action) {
   const { filepath } = action
   const repoDir = yield select(getDir)
@@ -119,4 +156,5 @@ export default function* () {
   yield takeEvery(constants.UPDATE, update)
   yield takeEvery(constants.ADD_FILE, addFile)
   yield takeEvery(constants.CHECKOUT_FILE, checkoutFile)
+  yield takeEvery(constants.CHECKOUT_HUNK, checkoutHunk)
 }

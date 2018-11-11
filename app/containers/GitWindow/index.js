@@ -43,6 +43,11 @@ const Hunk = props => (
       ))}
       <Line content="..."/>{'\n'}
     </pre>
+    <Button>Accept</Button>
+    <Button
+      type='warning'
+      onClick={() => props.onCheckoutHunk(props.hunk)}
+    >Reject</Button>
   </div>
 )
 
@@ -50,16 +55,24 @@ const Patch = props => (
   <div className="patch">
     <h3>{ props.patch.newFilepath }</h3>
     {props.patch.hunks.map((hunk, i) => (
-      <Hunk key={i} hunk={hunk} onAddFile={props.onAddFile} />
+      <Hunk
+        key={i}
+        hunk={hunk}
+        onAddFile={props.onAddFile}
+        onCheckoutHunk={(hunk) => {
+          // add a filepath to the hunk checkout
+          return props.onCheckoutHunk(hunk, props.patch.newFilepath)
+        }}
+      />
     ))}
     <div className="git-patch__buttons">
       <Button
         onClick={() => props.onAddFile(props.patch.newFilepath)}
-      >Accept</Button>
+      >Accept All</Button>
       <Button
         onClick={() => props.onCheckoutFile(props.patch.newFilepath)}
         type='warning'
-      >Reject</Button>
+      >Reject All</Button>
     </div>
   </div>
 )
@@ -97,6 +110,7 @@ class GitWindow extends React.Component {
             key={i}
             patch={patch}
             onCheckoutFile={this.props.checkoutFile.bind(this)}
+            onCheckoutHunk={this.props.checkoutHunk.bind(this)}
             onAddFile={this.props.addFile.bind(this)}
           />
         ))}
@@ -123,5 +137,6 @@ export default connect(
     updateGit: () => dispatch(actions.update()),
     addFile: (filepath) => dispatch(actions.addFile(filepath)),
     checkoutFile: (filepath) => dispatch(actions.checkoutFile(filepath)),
+    checkoutHunk: (hunk, filepath) => dispatch(actions.checkoutHunk(hunk, filepath)),
   })
 )(GitWindow)

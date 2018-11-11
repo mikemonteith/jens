@@ -5,6 +5,7 @@ import {
   PATCHES_UPDATED,
   ADD_FILE,
   CHECKOUT_FILE,
+  CHECKOUT_HUNK,
 } from './constants'
 
 export const update = () => ({
@@ -28,5 +29,11 @@ export const addFile = (filepath) => ({
 
 export const checkoutFile = (filepath) => ({
   type: CHECKOUT_FILE,
+  filepath,
+})
+
+export const checkoutHunk = (hunk, filepath) => ({
+  type: CHECKOUT_HUNK,
+  hunk,
   filepath,
 })
