@@ -90,6 +90,41 @@ function* update () {
 
 }
 
+function* addHunk (action) {
+  const { hunk, filepath } = action
+  const repoDir = yield select(getDir)
+  const repo = yield Git.Repository.open(repoDir)
+
+  const index = yield repo.refreshIndex()
+
+  const oldEntry = index.getByPath(filepath, 0)
+  const oldFile = yield Git.Blob.lookup(repo, oldEntry.id).toString()
+
+  const patch = hunk.header + hunk.lines.map(line => {
+    var status = {
+      'CONTEXT': ' ',
+      'ADDITION': '+',
+      'REMOVAL': '-',
+    }[line.status]
+    return status + line.content
+  }).join("")
+
+  const newFile = jsdiff.applyPatch(oldFile, patch)
+  const buffer = new Buffer(newFile, "utf8")
+  const oid = yield Git.Blob.createFromBuffer(repo, buffer, buffer.length);
+
+  const indexEntry = new Git.IndexEntry()
+  indexEntry.path = filepath
+  indexEntry.id = oid
+  indexEntry.mode = Git.TreeEntry.FILEMODE.BLOB;
+
+  yield index.add(indexEntry)
+  yield index.write()
+  yield index.writeTree()
+
+  yield update()
+}
+
 function* addFile (action) {
   const { filepath } = action
   const repoDir = yield select(getDir)
@@ -156,5 +191,6 @@ export default function* () {
   yield takeEvery(constants.UPDATE, update)
   yield takeEvery(constants.ADD_FILE, addFile)
   yield takeEvery(constants.CHECKOUT_FILE, checkoutFile)
+  yield takeEvery(constants.ADD_HUNK, addHunk)
   yield takeEvery(constants.CHECKOUT_HUNK, checkoutHunk)
 }

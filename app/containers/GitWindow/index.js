@@ -43,7 +43,9 @@ const Hunk = props => (
       ))}
       <Line content="..."/>{'\n'}
     </pre>
-    <Button>Accept</Button>
+    <Button
+      onClick={() => props.onAddHunk(props.hunk)}
+    >Accept</Button>
     <Button
       type='warning'
       onClick={() => props.onCheckoutHunk(props.hunk)}
@@ -62,6 +64,10 @@ const Patch = props => (
         onCheckoutHunk={(hunk) => {
           // add a filepath to the hunk checkout
           return props.onCheckoutHunk(hunk, props.patch.newFilepath)
+        }}
+        onAddHunk={(hunk) => {
+          // add a filepath to the hunk add
+          return props.onAddHunk(hunk, props.patch.newFilepath)
         }}
       />
     ))}
@@ -112,6 +118,7 @@ class GitWindow extends React.Component {
             onCheckoutFile={this.props.checkoutFile.bind(this)}
             onCheckoutHunk={this.props.checkoutHunk.bind(this)}
             onAddFile={this.props.addFile.bind(this)}
+            onAddHunk={this.props.addHunk.bind(this)}
           />
         ))}
       </div>
@@ -137,6 +144,7 @@ export default connect(
     updateGit: () => dispatch(actions.update()),
     addFile: (filepath) => dispatch(actions.addFile(filepath)),
     checkoutFile: (filepath) => dispatch(actions.checkoutFile(filepath)),
+    addHunk: (hunk, filepath) => dispatch(actions.addHunk(hunk, filepath)),
     checkoutHunk: (hunk, filepath) => dispatch(actions.checkoutHunk(hunk, filepath)),
   })
 )(GitWindow)
