@@ -22,10 +22,14 @@
 }
 
 .git-hunk-line {
+  display: block;
+  width: 100%;
   &--addition {
     color: green;
+    background-color: lighten(green, 60);
   }
   &--removal {
     color: red;
+    background-color: lighten(red, 40);
   }
 }
