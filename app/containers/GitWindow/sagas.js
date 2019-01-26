@@ -97,8 +97,9 @@ function* addHunk (action) {
 
   const index = yield repo.refreshIndex()
 
-  const oldEntry = index.getByPath(filepath, 0)
-  const oldFile = yield Git.Blob.lookup(repo, oldEntry.id).toString()
+  const indexEntry = index.getByPath(filepath, 0)
+  const blob = yield Git.Blob.lookup(repo, indexEntry.id)
+  const indexFile = blob.toString()
 
   const patch = hunk.header + hunk.lines.map(line => {
     var status = {
@@ -109,15 +110,15 @@ function* addHunk (action) {
     return status + line.content
   }).join("")
 
-  const newFile = jsdiff.applyPatch(oldFile, patch)
-  const buffer = new Buffer(newFile, "utf8")
-  const oid = yield Git.Blob.createFromBuffer(repo, buffer, buffer.length);
+  const newFile = jsdiff.applyPatch(indexFile, patch)
+  if(!newFile) {
+    throw new Error(`cannot apply patch ${patch} to ${indexFile}`)
+  }
+  const buffer = new Buffer(newFile)
+  const oid = yield Git.Blob.createFromBuffer(repo, buffer, buffer.length)
 
-  const indexEntry = new Git.IndexEntry()
-  indexEntry.path = filepath
+  // Update the index entry with our new patched content
   indexEntry.id = oid
-  indexEntry.mode = Git.TreeEntry.FILEMODE.BLOB;
-
   yield index.add(indexEntry)
   yield index.write()
   yield index.writeTree()
@@ -166,7 +167,9 @@ function* checkoutHunk (action) {
     }
 
     fs.writeFile(fullFilepath, patchedFile, (err) => {
-      console.warn(err)
+      if(err) {
+        console.warn(err)
+      }
     })
   })
 
