@@ -1,3 +1,5 @@
+@import 'theme/colors';
+
 .git-window {
 
   .git-window-file {
@@ -10,5 +12,24 @@
     &--staged {
       color: green;
     }
+  }
+}
+
+.git-hunk__code {
+  background-color: $color-background-tint;
+  padding-left: 1em;
+  margin-left: 1em;
+}
+
+.git-hunk-line {
+  display: block;
+  width: 100%;
+  &--addition {
+    color: green;
+    background-color: lighten(green, 60);
+  }
+  &--removal {
+    color: red;
+    background-color: lighten(red, 40);
   }
 }

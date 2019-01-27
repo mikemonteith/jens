@@ -6,7 +6,8 @@ import * as constants from './constants'
 const initialState = {
   status: {
     files: []
-  }
+  },
+  patches: [],
 }
 
 export default handleActions({
@@ -18,5 +19,9 @@ export default handleActions({
       ...state.status,
       files: action.files,
     }
+  }),
+  [constants.PATCHES_UPDATED]: (state, action) => ({
+    ...state,
+    patches: action.patches,
   })
 }, initialState)

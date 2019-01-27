@@ -1,3 +1,8 @@
 
 export const UPDATE = 'GIT_UPDATE'
 export const STATUS_UPDATED = 'GIT_STATUS_UPDATED'
+export const PATCHES_UPDATED = 'GIT_PATCHES_UPDATED'
+export const ADD_FILE = 'GIT_ADD_FILE'
+export const CHECKOUT_FILE = 'GIT_CHECKOUT_FILE'
+export const ADD_HUNK = 'GIT_ADD_HUNK'
+export const CHECKOUT_HUNK = 'GIT_CHECKOUT_HUNK'
